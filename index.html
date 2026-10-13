@@ -1,10 +1,9 @@
-```
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>Sanju · PICK11</title>
+  <title>Sanju · BHAU Lottery</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -737,7 +736,7 @@
       .menu-grid { grid-template-columns: 1fr 1fr; }
     }
   
-/* ===== PICK11 DASHBOARD V2 — DASHBOARD ONLY ===== */
+/* ===== BHAU LOTTERY DASHBOARD V2 — DASHBOARD ONLY ===== */
 #dashboard{
   margin-top:4px;
 }
@@ -1762,7 +1761,6 @@ select:focus{
     padding:18px 14px !important;
   }
 }
-.menu-item.admin-option-off{opacity:.62;cursor:pointer;}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
@@ -1819,14 +1817,6 @@ select:focus{
       </div>
       <form id="loginForm">
         <div class="form-group">
-          <label class="label">🖥️ SERVER</label>
-          <div class="input-wrap">
-            <div class="input-icon">🌐</div>
-            <select id="serverSelect" style="width:100%;height:100%;background:transparent;border:none;outline:none;color:#f1f5f9;font-size:16px;padding-right:14px;cursor:pointer;"><option value="" disabled selected>SELECT SERVER (REQUIRED)</option><option value="server1">SERVER 1</option><option value="server2">SERVER 2</option></select>
-          </div>
-        </div>
-
-        <div class="form-group">
           <label class="label">📱 PHONE NUMBER</label>
           <div class="input-wrap">
             <div class="input-icon">📞</div>
@@ -1850,7 +1840,7 @@ select:focus{
         <div class="jwt-login-panel" id="jwtLoginPanel">
           <div class="jwt-login-title">🔐 Login with JWT Token</div>
           <div class="jwt-login-help">
-            Paste your valid Pick11 JWT token below. JWT login does not require server selection.
+            Paste your valid Bhau Lottery JWT token below. JWT login uses SERVER 1 automatically.
           </div>
           <div class="jwt-phone-group">
             <label for="jwtPhoneInput">📱 PHONE NUMBER</label>
@@ -1866,7 +1856,6 @@ select:focus{
             <button type="button" id="jwtClearBtn">✕ CLEAR</button>
           </div>
           <button type="button" id="jwtAutoPasteBtn">📋 AUTOPASTE SAVED JWT</button>
-          <button type="button" id="jwtNumberAutoPasteBtn" class="jwt-number-login-btn">📱 NUMBER → AUTO JWT</button>
           <div id="jwtAutoPasteStatus" class="jwt-autopaste-status"></div>
           <div id="jwtStatus"></div>
         </div>
@@ -2069,14 +2058,9 @@ select:focus{
       name: 'SERVER 1',
       url: 'https://amaeuexpeyyjeqihamwj.supabase.co/functions/v1/auto-login',
       key: 'sb_publishable_IY9j-eevqN1X_31mZd0H4A_jOJeaIOV'
-    },
-    server2: {
-      name: 'SERVER 2',
-      url: 'https://oqzvljhkxhgyfnlpxqlm.supabase.co/functions/v1/auto-login',
-      key: 'sb_publishable_NO8fVJUpz_xZpXks1jd3XA_kZZBhqde'
     }
   };
-  let selectedServer = '';
+  let selectedServer = 'server1';
 
   // ─── SUPABASE SAVED-NUMBER → JWT LOADER ───────────────────────────────
   // Only loads a JWT for the exact phone requested from the configured
@@ -2620,11 +2604,8 @@ select:focus{
   }
 
   function updateServerBadges(){
-    const label = selectedServer && AUTO_LOGIN_SERVERS[selectedServer]
-      ? '● '+AUTO_LOGIN_SERVERS[selectedServer].name+' · AUTO SYNC'
-      : '● NO SERVER SELECTED';
     document.querySelectorAll('[data-server-badge]').forEach(el=>{
-      el.textContent=label;
+      el.textContent='● SERVER 1 · AUTO SYNC';
     });
   }
 
@@ -2649,18 +2630,6 @@ select:focus{
   // ─── UI UPDATES ───────────────────────────────────────────────────────────
   async function updateNumberDisplay(){
     try{
-      // Firebase is the shared source for manually saved dummy numbers.
-      // If the background sync has loaded it, do not require a server selection.
-      if(window.__bhauDummyNumbersLoaded){
-        const data=window.__bhauDummyNumbers||{};
-        const entries=Object.values(data).filter(v=>v && v.number && v.used!==true);
-        const nums=entries.slice(0,3).map(v=>String(v.number));
-        numberStatus.textContent=nums.length+' unused';
-        numberStatus.style.color=nums.length?'#34d399':'#6b7280';
-        numberList.innerHTML=nums.length?nums.map(n=>`<div class="number-item">📱 ${n}</div>`).join(''):
-          '<span style="color:#6b7280;font-size:11px;">No unused numbers available</span>';
-        return;
-      }
       const r=await autoLoginAPI('get_unused');
       const nums=(r.numbers||[]).slice(0,3);
       numberStatus.textContent=nums.length+' unused';
@@ -2673,22 +2642,17 @@ select:focus{
     }
   }
 
-  async function claimDummyFirebaseNumber(){
-    if(!window.__claimDummyFirebaseNumber) return null;
-    return await window.__claimDummyFirebaseNumber();
-  }
-
   // ─── SESSION ──────────────────────────────────────────────────────────────
   function saveSession(){
     if(S.isLoggedIn && S.token){
-      try{ localStorage.setItem('pick11_session',JSON.stringify({
+      try{ localStorage.setItem('bhau_session',JSON.stringify({
         token:S.token, phone:S.phone, phoneDisplay:S.phoneDisplay||'', visitor:S.visitor, isLoggedIn:true, authMode:S.authMode||'normal'
       }));}catch(_){}
     }
   }
   function loadSession(){
     try{
-      const d=JSON.parse(localStorage.getItem('pick11_session'));
+      const d=JSON.parse(localStorage.getItem('bhau_session'));
       if(d?.isLoggedIn && d.token){
         S.token=d.token; S.phone=d.phone||'8597630383'; S.phoneDisplay=d.phoneDisplay||'';
         S.visitor=d.visitor||'0bcbcd2bea0bde4737e38d0e23bbf654dfc9';
@@ -2698,7 +2662,7 @@ select:focus{
     }catch(_){}
     return false;
   }
-  function clearSession(){ try{ localStorage.removeItem('pick11_session'); }catch(_){} }
+  function clearSession(){ try{ localStorage.removeItem('bhau_session'); }catch(_){} }
 
   // ─── JWT TOKEN LOGIN ─────────────────────────────────────────────────────
   function cleanJwt(raw){
@@ -2782,11 +2746,11 @@ select:focus{
     const oldToken=S.token, oldVisitor=S.visitor, oldPhone=S.phone;
     const visitor='jwt-'+Math.random().toString(36).slice(2)+Date.now();
     try{
-      // Validate the supplied token against the existing Pick11 authenticated balance API.
-      const payload={channel:'h5',channelId:'pick11',lang:'en_US',visitor,reqDate:Date.now(),ua:'Mozilla/5.0 (Linux; Android 13; Mobile)',packageId:13,packageInfo:'com.resulta.checka',versionCode:'999',isDemo:1,count:1,betAmount:10};
-      const r=await fetch('https://playpick11.com/api/app/user/getBalanceV2?gameType=BigTurnTable',{
+      // Validate the supplied token against the existing Bhau authenticated balance API.
+      const payload={channel:'h5',channelId:'Samsung',lang:'en_US',visitor,reqDate:Date.now(),ua:'Mozilla/5.0 (Linux; Android 13; Mobile)',packageId:2,packageInfo:'com.resulta.checka',versionCode:'999',isDemo:1,count:1,betAmount:10};
+      const r=await fetch('https://api.bh2255.xyz/app/user/getBalanceV2?gameType=BigTurnTable',{
         method:'POST',
-        headers:{'Accept':'application/json, text/plain, */*','Token':token,'Visitor':visitor,'Content-Type':'application/json','Origin':'https://playpick11.com','Referer':'https://playpick11.com/','PackageId':'13'},
+        headers:{'Accept':'application/json, text/plain, */*','Token':token,'Visitor':visitor,'Content-Type':'application/json','Origin':'https://playbhau.com','Referer':'https://playbhau.com/','PackageId':'2'},
         body:JSON.stringify(payload)
       });
       let d={}; try{d=await r.json();}catch(_){ }
@@ -2802,14 +2766,14 @@ select:focus{
       const phone=/^[6-9]\d{9}$/.test(enteredPhone) ? enteredPhone : (/^[6-9]\d{9}$/.test(claimPhone) ? claimPhone : '');
       const balance=Number(d.data?.totalBalance||0);
 
-      // Read the authenticated phone from Pick11's user-info API.
+      // Read the authenticated phone from Bhau's user-info API.
       // The API response shown in DevTools contains data.userPhone, e.g. 839****934.
       let apiUserPhone='';
       try{
-        const infoPayload={channel:'h5',channelId:'pick11',lang:'en_US',visitor,packageId:13,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:navigator.userAgent||'Mozilla/5.0',versionCode:'999'};
-        const infoRes=await fetch('https://playpick11.com/api/app/user/info',{
+        const infoPayload={channel:'h5',channelId:'bhau',lang:'en_US',visitor,packageId:2,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:navigator.userAgent||'Mozilla/5.0',versionCode:'999'};
+        const infoRes=await fetch('https://playbhau.com/api/app/user/info',{
           method:'POST',
-          headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','Token':token,'Visitor':visitor,'Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
+          headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','Token':token,'Visitor':visitor,'Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
           body:JSON.stringify(infoPayload),
           credentials:'include'
         });
@@ -2821,7 +2785,7 @@ select:focus{
       S.token=token; S.visitor=visitor; S.phone=phone;
       S.phoneDisplay=apiUserPhone || displayOriginalPhone(phone) || 'Unknown';
       S.balance=Number.isFinite(balance)?balance:0; S.isLoggedIn=true; S.authMode='jwt';
-      try{ localStorage.setItem('pick11_jwt_token',token); }catch(_){ }
+      try{ localStorage.setItem('bhau_jwt_token',token); }catch(_){ }
       saveSession();
       userPhoneDisplay.textContent=S.phoneDisplay||displayOriginalPhone(phone);
       applyLiveBalance(S.balance);
@@ -2869,7 +2833,19 @@ select:focus{
     if(phoneInput) phoneInput.value=p;
   });
   jwtClearBtn?.addEventListener('click',()=>{ jwtTokenInput.value=''; if(jwtAutoPasteStatus) jwtAutoPasteStatus.textContent=''; setJwtStatus(''); jwtTokenInput.focus(); });
-  jwtLoginBtn?.addEventListener('click',()=>loginWithJwt(jwtTokenInput.value));
+  jwtLoginBtn?.addEventListener('click',async()=>{
+    const pasted=String(jwtTokenInput?.value||'').trim();
+    if(pasted){ await loginWithJwt(pasted); return; }
+    const phone=String(jwtPhoneInput?.value || phoneInput?.value || '').replace(/\D/g,'');
+    if(phoneInput) phoneInput.value=phone;
+    try{
+      const loaded=await loadSavedJwtForPhone(phone);
+      if(loaded?.token) await loginWithJwt(loaded.token);
+    }catch(e){
+      setJwtStatus(e.message||'Saved JWT not found.','error');
+      showToast(e.message||'Saved JWT not found.','warning');
+    }
+  });
 
   jwtNumberAutoPasteBtn?.addEventListener('click',async()=>{
     const phone=String(jwtPhoneInput?.value || phoneInput?.value || '').replace(/\D/g,'');
@@ -2899,7 +2875,7 @@ select:focus{
       }
     }
     try{
-      const saved=localStorage.getItem('pick11_jwt_token')||'';
+      const saved=localStorage.getItem('bhau_jwt_token')||'';
       if(!saved){ setJwtStatus('Enter a saved 10-digit number or paste a JWT token.','error'); return; }
       jwtTokenInput.value=saved; setJwtStatus('Saved token loaded. Click LOGIN WITH JWT.','success');
     }catch(_){ setJwtStatus('Unable to read saved token.','error'); }
@@ -2910,29 +2886,16 @@ select:focus{
     const visitor=Math.random().toString(36).substring(2,15)+Math.random().toString(36).substring(2,15);
     const device_id=Math.random().toString(36).substring(2,15)+Math.random().toString(36).substring(2,15);
     const payload={
-      channel:'h5',
-      channelId:'pick11',
-      lang:'en_US',
-      pageData:13,
-      packageId:13,
-      packageInfo:'com.resulta.checka',
-      reqDate:Date.now(),
-      ua:navigator.userAgent||'Mozilla/5.0',
-      userPhone:phone,
-      password,
-      versionCode:'999',
-      visitor,
-      deviceCode:device_id,
-      distinctId:device_id
+      userPhone:phone, password, deviceCode:device_id, distinctId:device_id,
+      channel:'h5', channelId:'Samsung', lang:'en_US', platform:'h5',
+      packageId:2, packageInfo:'com.resulta.checka', versionCode:'999',
+      deviceBrand:'Android', deviceModel:'Unknown', visitor, reqDate:Date.now(),
+      ua:'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36'
     };
     try{
-      const r=await fetch('https://playpick11.com/api/app/password/login',{
+      const r=await fetch('https://api.bh2255.xyz/app/password/login',{
         method:'POST',
-        headers:{
-          'Accept':'application/json, text/plain, */*',
-          'Content-Type':'application/json'
-        },
-        credentials:'include',
+        headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','Origin':'https://playbhau.com','Referer':'https://playbhau.com/','User-Agent':'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36'},
         body:JSON.stringify(payload)
       });
       if(r.status!==200){
@@ -2979,7 +2942,7 @@ select:focus{
         if(el.textContent!==text) el.textContent=text;
       });
       window.dispatchEvent(new CustomEvent('balancechange',{detail:{balance:bal}}));
-      try{ localStorage.setItem('pick11_live_balance',JSON.stringify({balance:bal,at:Date.now()})); }catch(_){}
+      try{ localStorage.setItem('bhau_live_balance',JSON.stringify({balance:bal,at:Date.now()})); }catch(_){}
     }
   }
 
@@ -2998,7 +2961,7 @@ select:focus{
     if(!document.hidden && S.isLoggedIn && S.token && !balanceRequestInFlight) void getBalance();
   });
   window.addEventListener('storage',e=>{
-    if(e.key==='pick11_live_balance' && e.newValue){
+    if(e.key==='bhau_live_balance' && e.newValue){
       try{ const d=JSON.parse(e.newValue); if(Number.isFinite(Number(d.balance))) applyLiveBalance(Number(d.balance)); }catch(_){}
     }
   });
@@ -3007,10 +2970,10 @@ select:focus{
     if(!S.token || balanceRequestInFlight) return null;
     balanceRequestInFlight=true;
     try{
-      const payload={channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,reqDate:Date.now(),ua:'Mozilla/5.0 (Linux; Android 13; 22087RA4DI)',packageId:13,packageInfo:'com.resulta.checka',versionCode:'999',isDemo:1,count:1,betAmount:10};
-      const r=await fetch('https://playpick11.com/api/app/user/getBalanceV2?gameType=BigTurnTable',{
+      const payload={channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,reqDate:Date.now(),ua:'Mozilla/5.0 (Linux; Android 13; 22087RA4DI)',packageId:2,packageInfo:'com.resulta.checka',versionCode:'999',isDemo:1,count:1,betAmount:10};
+      const r=await fetch('https://api.bh2255.xyz/app/user/getBalanceV2?gameType=BigTurnTable',{
         method:'POST',
-        headers:{'Accept':'application/json, text/plain, */*','Token':S.token,'Visitor':S.visitor,'Content-Type':'application/json','Origin':'https://playpick11.com','Referer':'https://playpick11.com/','PackageId':'13'},
+        headers:{'Accept':'application/json, text/plain, */*','Token':S.token,'Visitor':S.visitor,'Content-Type':'application/json','Origin':'https://playbhau.com','Referer':'https://playbhau.com/','PackageId':'2'},
         body:JSON.stringify(payload)
       });
       if(r.status===200){
@@ -3030,10 +2993,10 @@ select:focus{
   async function getReferralHistory(pageNo=1){
     if(!S.token) return null;
     try{
-      const payload={channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,packageId:13,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Mobile Safari/537.36',versionCode:'999',pageNo,pageSize:20,startTime:'',endTime:''};
-      const r=await fetch('https://playpick11.com/api/app/inviteTask/getRecordList',{
+      const payload={channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,packageId:2,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Mobile Safari/537.36',versionCode:'999',pageNo,pageSize:20,startTime:'',endTime:''};
+      const r=await fetch('https://api.bh2255.xyz/app/inviteTask/getRecordList',{
         method:'POST',
-        headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','Token':S.token,'Visitor':S.visitor,'PackageId':'13','Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
+        headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','Token':S.token,'Visitor':S.visitor,'PackageId':'2','Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
         body:JSON.stringify(payload)
       });
       if(r.status===200){
@@ -3203,8 +3166,8 @@ select:focus{
     try{
       const r=await fetch('https://api.bh556677ww.com/app/pay/balance/list',{
         method:'POST',
-        headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'13','Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
-        body:JSON.stringify({channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,packageId:13,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0',versionCode:'999'})
+        headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'2','Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
+        body:JSON.stringify({channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,packageId:2,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0',versionCode:'999'})
       });
       if(r.status===200){
         const d=await r.json();
@@ -3242,8 +3205,8 @@ select:focus{
     try{
       const r=await fetch('https://api.bh556677ww.com/app/pay/type/active/list',{
         method:'POST',
-        headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'13','Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
-        body:JSON.stringify({channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,packageId:13,packageInfo:'com.resulta.checka',reqDate:Date.now(),channelUser:0,ua:'Mozilla/5.0',versionCode:'999'})
+        headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'2','Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
+        body:JSON.stringify({channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,packageId:2,packageInfo:'com.resulta.checka',reqDate:Date.now(),channelUser:0,ua:'Mozilla/5.0',versionCode:'999'})
       });
       if(r.status===200){ const d=await r.json(); if(d.code===0) S.paymentMethods=d.data||[]; }
     }catch(_){}
@@ -3492,12 +3455,12 @@ select:focus{
       if(btn){ btn.disabled=true; btn.textContent='⏳ OPENING DEPOSIT...'; }
 
       try{
-        const r=await fetch('https://playpick11.com/api/app/pay/income',{
+        const r=await fetch('https://api.bh2255.xyz/app/pay/income',{
           method:'POST',
-          headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','token':S.token,'packageid':'13','visitor':S.visitor,'Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
+          headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','token':S.token,'packageid':'2','visitor':S.visitor,'Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
           body:JSON.stringify({
-            channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,
-            reqDate:Date.now(),ua:'Mozilla/5.0',packageId:13,
+            channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,
+            reqDate:Date.now(),ua:'Mozilla/5.0',packageId:2,
             packageInfo:'com.resulta.checka',versionCode:'999',
             balanceId:String(balanceId),
             payTag:S.selectedPayment.tag||'PAYMENT_CENTER_PAY',
@@ -3586,8 +3549,8 @@ select:focus{
     try{
       const r=await fetch('https://api.bh2266.xyz/app/card/info',{
         method:'POST',
-        headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'13','Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
-        body:JSON.stringify({channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,packageId:13,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0',versionCode:'999'})
+        headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'2','Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
+        body:JSON.stringify({channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,packageId:2,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0',versionCode:'999'})
       });
       if(r.status===200){ const d=await r.json(); if(d.code===0){ S.withdrawCards=d.data||[]; S.cardList=S.withdrawCards; if(S.withdrawCards.length && S.selectedCard===null){ const id=parseInt(S.withdrawCards[0].id||S.withdrawCards[0].cardId); if(!isNaN(id)) S.selectedCard=id; } } }
     }catch(_){}
@@ -3600,7 +3563,7 @@ select:focus{
         const bank=c.bankName||c.bank||'Bank';
         const acc=c.accountNumber||c.cardNumber||c.cardNo||'';
         const sel=(S.selectedCard!==null && id===S.selectedCard)?'selected':'';
-        cardHtml+=`<div class="payment-method card-item ${sel}" data-id="${id}"><div><div class="pm-name">${bank} - ${holder}</div><div class="pm-desc">${acc?'****'+acc.slice(-4):''}</div></div></div>`;
+        cardHtml+=`<div class="payment-method card-item ${sel}" data-id="${id}"><div><div class="pm-name">${bank} - ${holder}</div><div class="pm-desc">Card ID: ${id}${acc?' · Account ****'+acc.slice(-4):''}</div></div></div>`;
       }
       cardHtml+=`</div></div>`;
     }else cardHtml=`<div style="text-align:center;padding:8px 8px 12px;">
@@ -3610,7 +3573,15 @@ select:focus{
 
     showPanel(`<div class="dynamic-card"><div class="title">💸 Withdraw Funds <button class="btn-close-panel" onclick="window._closePanel()">✕ Close</button></div>
       <div class="balance-info">Available Balance: <span>₹${S.balance.toFixed(2)}</span></div>
-      ${cardHtml}
+      <div style="display:flex;gap:8px;margin:10px 0;">
+        <button type="button" id="withdrawBankMode" class="btn-sm" style="flex:1;padding:10px;border-radius:12px;">🏦 Bank Account</button>
+        <button type="button" id="withdrawManualMode" class="btn-sm" style="flex:1;padding:10px;border-radius:12px;">💳 Manual Card ID</button>
+      </div>
+      <div id="withdrawBankSection">${cardHtml}</div>
+      <div id="withdrawManualSection" style="display:none;margin:8px 0 12px;">
+        <div style="color:#6b7280;font-size:10px;font-weight:600;margin-bottom:5px;">Enter Card ID</div>
+        <input type="text" id="withdrawManualCardId" autocomplete="off" placeholder="Enter Card ID manually" style="width:100%;padding:11px 14px;background:rgba(8,12,26,0.6);border:1px solid rgba(255,255,255,0.12);border-radius:14px;color:#e2e8f0;font-size:14px;outline:none;">
+      </div>
       <div style="margin-top:8px;">
         <div style="color:#6b7280;font-size:10px;font-weight:600;margin-bottom:7px;">Quick Withdraw Amount</div>
         <div style="display:flex;gap:8px;margin-bottom:9px;">
@@ -3621,10 +3592,58 @@ select:focus{
         <input type="number" id="withdrawAmountInput" placeholder="Enter amount to withdraw" min="0" step="1" style="width:100%;padding:10px 14px;background:rgba(8,12,26,0.6);border:1px solid rgba(255,255,255,0.02);border-radius:16px;color:#e2e8f0;font-size:14px;outline:none;box-shadow:inset 0 2px 8px rgba(0,0,0,0.1);">
       </div>
       <button class="btn-sm btn-withdraw btn-block" id="withdrawSubmitBtn" ${!S.withdrawCards||!S.withdrawCards.length?'disabled':''}>💸 Withdraw Now</button>
+      <button type="button" class="btn-sm btn-block" id="loadRealWithdrawalsBtn" style="margin-top:8px;background:rgba(139,92,246,.12);border:1px solid rgba(167,139,250,.35);color:#c4b5fd;">📋 View Real Withdrawal History</button>
+      <div id="realWithdrawalsResult" class="mt-10"></div>
       <div id="withdrawResult" class="mt-10"></div></div>`);
 
+    // Switch between a saved bank account and a manually entered Card ID.
+    let withdrawMode='bank';
+    const bankModeBtn=document.getElementById('withdrawBankMode');
+    const manualModeBtn=document.getElementById('withdrawManualMode');
+    const bankSection=document.getElementById('withdrawBankSection');
+    const manualSection=document.getElementById('withdrawManualSection');
+    const submitBtn=document.getElementById('withdrawSubmitBtn');
+    const updateWithdrawMode=mode=>{
+      withdrawMode=mode;
+      bankSection.style.display=mode==='bank'?'':'none';
+      manualSection.style.display=mode==='manual'?'':'none';
+      bankModeBtn.style.background=mode==='bank'?'rgba(16,185,129,.18)':'';
+      bankModeBtn.style.border=mode==='bank'?'1px solid #34d399':'';
+      manualModeBtn.style.background=mode==='manual'?'rgba(16,185,129,.18)':'';
+      manualModeBtn.style.border=mode==='manual'?'1px solid #34d399':'';
+      submitBtn.disabled=mode==='bank'&&(!S.withdrawCards||!S.withdrawCards.length);
+    };
+    bankModeBtn.addEventListener('click',()=>updateWithdrawMode('bank'));
+    manualModeBtn.addEventListener('click',()=>updateWithdrawMode('manual'));
+
+    // Fetch and display actual withdrawal records returned by the authenticated API.
+    document.getElementById('loadRealWithdrawalsBtn').addEventListener('click',async function(){
+      const out=document.getElementById('realWithdrawalsResult');
+      out.innerHTML='<div style="text-align:center;color:#a5b4fc;padding:12px;">Loading real withdrawal records…</div>';
+      this.disabled=true;
+      try{
+        const r=await fetch('https://api.bh2266.xyz/app/pay/paid/log',{
+          method:'POST',
+          headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','Token':S.token,'Visitor':S.visitor,'PackageId':'2','Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
+          body:JSON.stringify({channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,packageId:2,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:navigator.userAgent||'Mozilla/5.0',versionCode:'999',pageNo:1,pageSize:20})
+        });
+        const d=await r.json();
+        if(!r.ok || d.code!==0) throw new Error(d.msg||d.message||`HTTP ${r.status}`);
+        const rows=Array.isArray(d.data)?d.data:[];
+        const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        if(!rows.length){out.innerHTML='<div style="text-align:center;color:#9ca3af;padding:14px;">No withdrawal records returned by the server.</div>';return;}
+        out.innerHTML='<div style="font-weight:800;color:#c4b5fd;margin:10px 0 6px;">Server Withdrawal Response ('+rows.length+')</div>'+rows.map(t=>{
+          const st=getWithdrawStatus(t.respCode); const amount=Number(t.paidAmount||0); const reward=Number(t.reward||0);
+          const dt=Number(t.createTime||t.updateTime||0); const date=dt?(dt<1e12?new Date(dt*1000):new Date(dt)).toLocaleString(): 'Date unavailable';
+          const statusColor=st.cls==='complete'?'#34d399':st.cls==='failed'?'#fb7185':'#fbbf24';
+          return `<div style="padding:10px;margin:7px 0;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(0,0,0,.16);"><div style="display:flex;justify-content:space-between;gap:8px;"><b style="color:#e5e7eb;">₹${amount.toFixed(2)}</b><b style="color:${statusColor};">${st.label}</b></div><div style="font-size:11px;color:#9ca3af;margin-top:5px;">${safe(t.bankName||'Withdrawal')} · Card ${safe(t.userCardNumber||'—')}</div><div style="font-size:10px;color:#6b7280;margin-top:4px;">Order: ${safe(t.orderNo||'—')} · ${safe(date)}</div><div style="font-size:10px;color:#9ca3af;margin-top:4px;">Reward: ₹${reward.toFixed(2)} · Fee: ₹${Math.max(0,amount-reward).toFixed(2)}</div></div>`;
+        }).join('');
+      }catch(e){out.innerHTML='<div style="color:#fb7185;padding:10px;">Could not load real withdrawal records: '+String(e.message||e).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))+'</div>';}
+      finally{this.disabled=false;}
+    });
+
     // If no card is available, the Add Bank Card button opens the existing
-    // Bank Card panel directly. No withdrawal logic is changed.
+    // Bank Card panel directly.
     document.getElementById('withdrawAddCardBtn')?.addEventListener('click',()=>{
       renderAddCard();
     });
@@ -3649,22 +3668,25 @@ select:focus{
       });
     });
     document.getElementById('withdrawSubmitBtn').addEventListener('click',async function(){
-      if(!S.selectedCard){ showToast('Please select a card.','warning'); return; }
+      const manualCardId=(document.getElementById('withdrawManualCardId')?.value||'').trim();
+      if(withdrawMode==='bank'&&!S.selectedCard){ showToast('Please select a bank account.','warning'); return; }
+      if(withdrawMode==='manual'&&!manualCardId){ showToast('Please enter Card ID.','warning'); return; }
+      const destinationCardId=withdrawMode==='manual'?manualCardId:S.selectedCard;
       const amt=parseFloat(document.getElementById('withdrawAmountInput').value);
       if(!amt || amt<=0){ showToast('Enter valid amount.','warning'); return; }
       if(amt>S.balance){ showToast(`Amount exceeds balance (₹${S.balance.toFixed(2)})`,'warning'); return; }
       this.disabled=true; this.textContent='⏳ Processing...';
       try{
-        const r=await fetch('https://playpick11.com/api/app/pay/paid',{
+        const r=await fetch('https://api.bh2255.xyz/app/pay/paid',{
           method:'POST',
-          headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'13','Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
-          body:JSON.stringify({channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,cardId:S.selectedCard,price:amt,packageId:13,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0',versionCode:'999'})
+          headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'2','Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
+          body:JSON.stringify({channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,cardId:destinationCardId,price:amt,packageId:2,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0',versionCode:'999'})
         });
         const d=await r.json();
         const div=document.getElementById('withdrawResult');
-        const selectedCard = S.withdrawCards.find(c => Number(c.id) === Number(S.selectedCard));
-        const bankName = selectedCard?.bankName || selectedCard?.bank || selectedCard?.bankCardName || 'Bank';
-        const cardNo = selectedCard?.accountNumber || selectedCard?.cardNumber || selectedCard?.cardNo || selectedCard?.accountNo || selectedCard?.bankCardNumber || selectedCard?.bankCardNo || selectedCard?.number || selectedCard?.acctNo || selectedCard?.acctNumber || '';
+        const selectedCard = withdrawMode==='bank' ? S.withdrawCards.find(c => Number(c.id||c.cardId) === Number(S.selectedCard)) : null;
+        const bankName = withdrawMode==='manual' ? 'Manual Card ID' : (selectedCard?.bankName || selectedCard?.bank || selectedCard?.bankCardName || 'Bank');
+        const cardNo = withdrawMode==='manual' ? manualCardId : (selectedCard?.accountNumber || selectedCard?.cardNumber || selectedCard?.cardNo || selectedCard?.accountNo || selectedCard?.bankCardNumber || selectedCard?.bankCardNo || selectedCard?.number || selectedCard?.acctNo || selectedCard?.acctNumber || '');
         if(r.status===200 && (d.code===0||d.success===true)){
           div.innerHTML=`<div style="background:rgba(0,0,0,0.2);padding:10px;border-radius:16px;"><div style="color:#34d399;font-weight:600;">✅ Withdrawal successful!</div><div style="color:#6b7280;">₹${amt.toFixed(2)} withdrawn</div></div>`;
           showToast('Withdrawal successful!','success');
@@ -3707,8 +3729,8 @@ select:focus{
     try{
       const r=await fetch('https://api.bh2266.xyz/app/card/info',{
         method:'POST',
-        headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'13','Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
-        body:JSON.stringify({channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,packageId:13,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0',versionCode:'999'})
+        headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'2','Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
+        body:JSON.stringify({channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,packageId:2,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0',versionCode:'999'})
       });
       if(r.status===200){ const d=await r.json(); if(d.code===0){ S.withdrawCards=d.data||[]; S.cardList=S.withdrawCards; } }
     }catch(_){}
@@ -3761,10 +3783,10 @@ select:focus{
       b.addEventListener('click',async function(){
         if(!confirm('Delete card?')) return;
         try{
-          const r=await fetch('https://playpick11.com/api/app/card/del',{
+          const r=await fetch('https://api.bh2255.xyz/app/card/del',{
             method:'POST',
-            headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'13','Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
-            body:JSON.stringify({channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,id:parseInt(this.dataset.id),packageId:13,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0',versionCode:'999'})
+            headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'2','Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
+            body:JSON.stringify({channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,id:parseInt(this.dataset.id),packageId:2,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0',versionCode:'999'})
           });
           const d=await r.json();
           if(d.code===0||d.success===true){ if(S.selectedCard!==null && parseInt(this.dataset.id)===S.selectedCard) S.selectedCard=null; renderAddCard(); }
@@ -3781,10 +3803,10 @@ select:focus{
       if(!name||!number||!ifsc) return;
       this.disabled=true; this.textContent='⏳ Adding...';
       try{
-        const r=await fetch('https://playpick11.com/api/app/card/add',{
+        const r=await fetch('https://api.bh2255.xyz/app/card/add',{
           method:'POST',
-          headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'13','Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
-          body:JSON.stringify({channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,cardName:name,cardNumber:number,email:email||'',ifsCode:ifsc,smsCode:'',packageId:13,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0',versionCode:'999'})
+          headers:{'Accept':'application/json','Content-Type':'application/json','token':S.token,'packageid':'2','Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
+          body:JSON.stringify({channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,cardName:name,cardNumber:number,email:email||'',ifsCode:ifsc,smsCode:'',packageId:2,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0',versionCode:'999'})
         });
         const d=await r.json();
         const div=document.getElementById('addCardResult');
@@ -3975,11 +3997,6 @@ select:focus{
     }
 
     document.getElementById('dummyAccountBtn').addEventListener('click',async ()=>{
-      const settings=window.__bhauAdminSettings||{};
-      if(settings.dummyAccount===false || settings.dummyLoginLocked===true){
-        showToast('Please contact Sanju for unlock.','warning');
-        return;
-      }
       const btn=document.getElementById('dummyAccountBtn');
       if(!btn) return;
       const old=btn.innerHTML;
@@ -4013,7 +4030,7 @@ select:focus{
 
     document.getElementById('launchFanTan').addEventListener('click',async ()=>{
       try{
-        const r=await fetch('https://ltapi.game712.com/iGaming/common/getGameStart?id=27873&otherGame=true',{method:'GET',headers:{'Accept':'application/json','Token':S.token,'Visitor':S.visitor,'Origin':'https://playpick11.com','Referer':'https://playpick11.com/','PackageId':'13'}});
+        const r=await fetch('https://ltapi.game712.com/iGaming/common/getGameStart?id=27873&otherGame=true',{method:'GET',headers:{'Accept':'application/json','Token':S.token,'Visitor':S.visitor,'Origin':'https://playbhau.com','Referer':'https://playbhau.com/','PackageId':'2'}});
         const d=await r.json();
         if(d.code===0 && d.success){
           let url=d.data?.gameUrl||'';
@@ -4087,15 +4104,15 @@ select:focus{
     document.getElementById('launchFanTanClassic').addEventListener('click',async ()=>{
       const result=document.getElementById('gameResult');
       try{
-        const r=await fetch('https://playpick11.com/api/iGaming/common/getGameStart?id=21208&otherGame=true',{
+        const r=await fetch('https://playbhau.com/api/iGaming/common/getGameStart?id=21208&otherGame=true',{
           method:'GET',
           headers:{
             'Accept':'application/json',
             'Token':S.token,
             'Visitor':S.visitor,
-            'Origin':'https://playpick11.com',
-            'Referer':'https://playpick11.com/search',
-            'PackageId':'13'
+            'Origin':'https://playbhau.com',
+            'Referer':'https://playbhau.com/search',
+            'PackageId':'2'
           }
         });
         const d=await r.json();
@@ -4189,15 +4206,15 @@ select:focus{
     async function launchNewGame(gameId, gameName, openFn){
       const result=document.getElementById('gameResult');
       try{
-        const r=await fetch(`https://playpick11.com/api/iGaming/common/getGameStart?id=${gameId}&otherGame=true`,{
+        const r=await fetch(`https://playbhau.com/api/iGaming/common/getGameStart?id=${gameId}&otherGame=true`,{
           method:'GET',
           headers:{
             'Accept':'application/json',
             'Token':S.token,
             'Visitor':S.visitor,
-            'Origin':'https://playpick11.com',
-            'Referer':'https://playpick11.com/search',
-            'PackageId':'13'
+            'Origin':'https://playbhau.com',
+            'Referer':'https://playbhau.com/search',
+            'PackageId':'2'
           }
         });
         const d=await r.json();
@@ -4344,7 +4361,7 @@ select:focus{
 
     document.getElementById('launchChicken').addEventListener('click',async ()=>{
       try{
-        const r=await fetch('https://ltapi.game712.com/iGaming/common/getGameStart?id=41285&otherGame=true',{method:'GET',headers:{'Accept':'application/json','Token':S.token,'Visitor':S.visitor,'Origin':'https://playpick11.com','Referer':'https://playpick11.com/','PackageId':'13'}});
+        const r=await fetch('https://ltapi.game712.com/iGaming/common/getGameStart?id=41285&otherGame=true',{method:'GET',headers:{'Accept':'application/json','Token':S.token,'Visitor':S.visitor,'Origin':'https://playbhau.com','Referer':'https://playbhau.com/','PackageId':'2'}});
         const d=await r.json();
         if(d.code===0 && d.success){
           let url=d.data?.gameUrl||'';
@@ -4393,15 +4410,15 @@ select:focus{
     // Limbo is also a game, so make its panel fullscreen from the dashboard click.
     enterAllGamesFullscreen(document.getElementById('dynamicContent'));
     try{
-      const r=await fetch('https://playpick11.com/api/iGaming/common/getGameStart?id=41306&otherGame=true',{
+      const r=await fetch('https://playbhau.com/api/iGaming/common/getGameStart?id=41306&otherGame=true',{
         method:'GET',
         headers:{
           'Accept':'application/json',
           'Token':S.token,
           'Visitor':S.visitor,
-          'Origin':'https://playpick11.com',
-          'Referer':'https://playpick11.com/',
-          'PackageId':'13'
+          'Origin':'https://playbhau.com',
+          'Referer':'https://playbhau.com/',
+          'PackageId':'2'
         }
       });
       const d=await r.json();
@@ -4477,10 +4494,10 @@ select:focus{
   async function spinTurntable(bet=10,count=1){
     if(!S.token) return null;
     try{
-      const r=await fetch('https://playpick11.com/api/app/turntable/order/create',{
+      const r=await fetch('https://api.bh2255.xyz/app/turntable/order/create',{
         method:'POST',
-        headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','token':S.token,'packageid':'13','visitor':S.visitor,'Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
-        body:JSON.stringify({channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,reqDate:Date.now(),ua:'Mozilla/5.0 (Linux; Android 13)',packageId:13,packageInfo:'com.resulta.checka',versionCode:'999',isDemo:1,count,betAmount:bet})
+        headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','token':S.token,'packageid':'2','visitor':S.visitor,'Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
+        body:JSON.stringify({channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,reqDate:Date.now(),ua:'Mozilla/5.0 (Linux; Android 13)',packageId:2,packageInfo:'com.resulta.checka',versionCode:'999',isDemo:1,count,betAmount:bet})
       });
       if(r.status===200){ const d=await r.json(); if(d.code===0) return d; }
       return null;
@@ -4492,12 +4509,22 @@ select:focus{
     try{
       const r=await fetch('https://api.bh556677wplus.com/app/vip/getVipLevelReward',{
         method:'POST',
-        headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','token':S.token,'packageid':'13','visitor':S.visitor,'Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
-        body:JSON.stringify({channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,reqDate:Date.now(),ua:'Mozilla/5.0',packageId:13,packageInfo:'com.resulta.checka',versionCode:'999',level:1})
+        headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','token':S.token,'packageid':'2','visitor':S.visitor,'Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
+        body:JSON.stringify({channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,reqDate:Date.now(),ua:'Mozilla/5.0',packageId:2,packageInfo:'com.resulta.checka',versionCode:'999',level:1})
       });
       if(r.status===200){ const d=await r.json(); if(d.code===0) return d; }
       return null;
     }catch(_){ return null; }
+  }
+
+  /* Withdrawal status: respCode 0 = Pending, 1 = Processing, 2 = Complete, 3 = Failed */
+  function getWithdrawStatus(respCode) {
+    const code = Number(respCode);
+    if (code === 0) return { label: 'Pending', cls: 'process' };
+    if (code === 1) return { label: 'Processing', cls: 'process' };
+    if (code === 2) return { label: 'Complete', cls: 'complete' };
+    if (code === 3) return { label: 'Failed', cls: 'failed' };
+    return { label: 'Pending', cls: 'process' };
   }
 
   async function renderTransactions(){
@@ -4508,18 +4535,18 @@ select:focus{
     try{
       const r1=await fetch('https://api.bh2266.xyz/app/user/balance',{
         method:'POST',
-        headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','Token':S.token,'Visitor':S.visitor,'PackageId':'13','Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
-        body:JSON.stringify({channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,packageId:13,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Mobile Safari/537.36',versionCode:'999',pageNo:1,pageSize:20})
+        headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','Token':S.token,'Visitor':S.visitor,'PackageId':'2','Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
+        body:JSON.stringify({channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,packageId:2,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Mobile Safari/537.36',versionCode:'999',pageNo:1,pageSize:20})
       });
       if(r1.status===200){ const d=await r1.json(); if(d.code===0){ const list=d.data||[]; for(const t of list){ all.push({type:'deposit',appDate:t.appDate||t.createTime||Date.now(),amount:t.paidAmount||t.price||0,balance:t.balance||0,orderNo:t.orderNo||'',payTypeName:t.payTypeName||'Recharge',channelName:t.channelName||'',status:t.status||'COMPLETE',gameName:t.gameName||'',iconUrl:t.iconUrl||''}); } } }
     }catch(_){}
     try{
       const r2=await fetch('https://api.bh2266.xyz/app/pay/paid/log',{
         method:'POST',
-        headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','Token':S.token,'Visitor':S.visitor,'PackageId':'13','Origin':'https://playpick11.com','Referer':'https://playpick11.com/'},
-        body:JSON.stringify({channel:'h5',channelId:'pick11',lang:'en_US',visitor:S.visitor,packageId:13,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Mobile Safari/537.36',versionCode:'999',pageNo:1,pageSize:20})
+        headers:{'Accept':'application/json, text/plain, */*','Content-Type':'application/json','Token':S.token,'Visitor':S.visitor,'PackageId':'2','Origin':'https://playbhau.com','Referer':'https://playbhau.com/'},
+        body:JSON.stringify({channel:'h5',channelId:'Samsung',lang:'en_US',visitor:S.visitor,packageId:2,packageInfo:'com.resulta.checka',reqDate:Date.now(),ua:'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Mobile Safari/537.36',versionCode:'999',pageNo:1,pageSize:20})
       });
-      if(r2.status===200){ const d=await r2.json(); if(d.code===0){ const list=d.data||[]; for(const t of list){ all.push({type:'withdraw',appDate:t.createTime||Date.now(),amount:t.paidAmount||0,reward:t.reward||0,orderNo:t.orderNo||'',bankName:t.bankName||'',userCardNumber:t.userCardNumber||'',status:t.respCode===2?'COMPLETE':'PENDING',channelName:t.channelName||'SYSTEM'}); } } }
+      if(r2.status===200){ const d=await r2.json(); if(d.code===0){ const list=d.data||[]; for(const t of list){ all.push({type:'withdraw',appDate:t.createTime||Date.now(),amount:t.paidAmount||0,reward:t.reward||0,orderNo:t.orderNo||'',bankName:t.bankName||'',userCardNumber:t.userCardNumber||'',status:getWithdrawStatus(t.respCode).label, statusClass:getWithdrawStatus(t.respCode).cls,channelName:t.channelName||'SYSTEM'}); } } }
     }catch(_){}
     all.sort((a,b)=>(b.appDate||0)-(a.appDate||0));
     let html=`<div class="dynamic-card"><div class="title">📋 Transaction History (${all.length}) <button class="btn-close-panel" onclick="window._closePanel()">✕ Close</button></div>
@@ -4534,7 +4561,7 @@ select:focus{
       for(const t of all){
         const date=new Date(t.appDate); const ts=date.toLocaleString();
         const isDep=t.type==='deposit'; const amt=parseFloat(t.amount||0).toFixed(2); const bal=parseFloat(t.balance||0).toFixed(2);
-        const icon=isDep?'💰':'💸'; const typeLabel=isDep?'Deposit':'Withdraw'; const sc=t.status==='COMPLETE'?'#34d399':'#fbbf24';
+        const icon=isDep?'💰':'💸'; const typeLabel=isDep?'Deposit':'Withdraw'; const sc=isDep?(t.status==='COMPLETE'?'#34d399':'#fbbf24'):(t.status==='Complete'?'#34d399':(t.status==='Failed'?'#fb7185':'#fbbf24'));
         const displayName=isDep?(t.channelName||t.payTypeName||'Recharge'):(t.bankName||'Bank');
         html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.01);" data-type="${t.type}">
           <div style="flex:1;"><div><span>${icon} ${typeLabel}</span><span style="color:#fbbf24;margin-left:8px;font-weight:600;">₹${amt}</span>${t.gameName?`<span style="color:#6b7280;font-size:10px;margin-left:6px;">🎮 ${t.gameName}</span>`:''}</div>
@@ -4580,8 +4607,8 @@ select:focus{
     showPanel(html);
     document.getElementById('shareReferralBtn').addEventListener('click',async function(){
       try{
-        const r=await fetch('https://playpick11.com/api/app/share/getShareInfo',{method:'GET',headers:{'Accept':'application/json, text/plain, */*','Token':S.token,'Visitor':S.visitor,'Origin':'https://playpick11.com','Referer':'https://playpick11.com/'}});
-        if(r.status===200){ const d=await r.json(); if(d.code===0){ const sd=d.data||{}; const url=sd.shareUrl||'https://playpick11.com/'; const txt=sd.shareText||'Join Pick11 and win big! 🎰'; const div=document.getElementById('shareResult'); div.innerHTML=`<div style="background:rgba(0,0,0,0.2);padding:10px;border-radius:16px;"><div style="color:#34d399;font-weight:600;">✅ Share link ready!</div><div style="font-size:11px;color:#6b7280;word-break:break-all;margin:6px 0;">🔗 ${url}</div><div style="display:flex;gap:6px;margin-top:4px;"><button class="btn-sm btn-primary" onclick="navigator.clipboard.writeText('${url}')" style="padding:6px 14px;font-size:11px;">📋 Copy Link</button><button class="btn-sm btn-warning" onclick="window.open('${url}','_blank')" style="padding:6px 14px;font-size:11px;">🌐 Open</button></div>${txt?`<div style="font-size:10px;color:#6b7280;margin-top:4px;">📝 ${txt}</div>`:''}</div>`; } }
+        const r=await fetch('https://api.bh2255.xyz/app/share/getShareInfo',{method:'GET',headers:{'Accept':'application/json, text/plain, */*','Token':S.token,'Visitor':S.visitor,'Origin':'https://playbhau.com','Referer':'https://playbhau.com/'}});
+        if(r.status===200){ const d=await r.json(); if(d.code===0){ const sd=d.data||{}; const url=sd.shareUrl||'https://playbhau.com/'; const txt=sd.shareText||'Join Bhau Lottery and win big! 🎰'; const div=document.getElementById('shareResult'); div.innerHTML=`<div style="background:rgba(0,0,0,0.2);padding:10px;border-radius:16px;"><div style="color:#34d399;font-weight:600;">✅ Share link ready!</div><div style="font-size:11px;color:#6b7280;word-break:break-all;margin:6px 0;">🔗 ${url}</div><div style="display:flex;gap:6px;margin-top:4px;"><button class="btn-sm btn-primary" onclick="navigator.clipboard.writeText('${url}')" style="padding:6px 14px;font-size:11px;">📋 Copy Link</button><button class="btn-sm btn-warning" onclick="window.open('${url}','_blank')" style="padding:6px 14px;font-size:11px;">🌐 Open</button></div>${txt?`<div style="font-size:10px;color:#6b7280;margin-top:4px;">📝 ${txt}</div>`:''}</div>`; } }
       }catch(_){}
     });
   }
@@ -4670,18 +4697,10 @@ select:focus{
     if(!/^[6-9]\d{9}$/.test(phone)){ showToast('Enter valid 10-digit number.','warning'); return; }
     this.disabled=true;
     try{
-      if(window.__saveDummyFirebaseNumber){
-        await window.__saveDummyFirebaseNumber(phone);
-        saveNumberInput.value='';
-        showToast('Number saved successfully.','success');
-        await updateNumberDisplay();
-      }else{
-        // Backward-compatible fallback for older deployments.
-        await autoLoginAPI('save',{phone});
-        saveNumberInput.value='';
-        showToast('Number saved successfully.','success');
-        await updateNumberDisplay();
-      }
+      await autoLoginAPI('save',{phone});
+      saveNumberInput.value='';
+      showToast('Number saved successfully.','success');
+      await updateNumberDisplay();
     }catch(e){ showToast(e.message||'Number save failed.','error'); }
     finally{ this.disabled=false; }
   });
@@ -4768,11 +4787,6 @@ select:focus{
   const dummyLoginBtn = document.getElementById('dummyLoginBtn');
   if(dummyLoginBtn){
     dummyLoginBtn.addEventListener('click',async ()=>{
-      const settings=window.__bhauAdminSettings||{};
-      if(settings.dummyAccount===false || settings.dummyLoginLocked===true){
-        showToast('Please contact Sanju for unlock.','warning');
-        return;
-      }
       const old=dummyLoginBtn.innerHTML;
       dummyLoginBtn.disabled=true; dummyLoginBtn.innerHTML='⏳ LOGINING...';
       try{
@@ -4819,22 +4833,10 @@ select:focus{
     }
   });
 
-  // ─── SERVER SELECTOR / AUTO UPDATE ─────────────────────────────────────
-  const serverSelect=document.getElementById('serverSelect');
-  if(serverSelect){
-    serverSelect.value=selectedServer;
-    serverSelect.addEventListener('change',()=>{
-      selectedServer=serverSelect.value;
-      try{ localStorage.setItem('pick11_selected_server',selectedServer); }catch(_){}
-      saveSession();
-      updateServerBadges();
-      updateNumberDisplay();
-      showToast(getSelectedServer().name+' selected. Auto-save and auto-update switched to this server.','success');
-    });
-  }
+  // Fixed to SERVER 1; no server selector shown.
   updateServerBadges();
   try{
-    const savedJwt=localStorage.getItem('pick11_jwt_token');
+    const savedJwt=localStorage.getItem('bhau_jwt_token');
     if(savedJwt && jwtTokenInput) jwtTokenInput.value=savedJwt;
   }catch(_){ }
 
@@ -4873,7 +4875,6 @@ select:focus{
   // ─── RESTORE SESSION ────────────────────────────────────────────────
   if(loadSession()){
     if(S.authMode==='jwt') loginSection.classList.add('jwt-mode');
-    if(serverSelect) serverSelect.value=selectedServer;
     updateServerBadges();
     loginSection.style.display='none'; dashboard.style.display='block';
     userPhoneDisplay.textContent=S.phoneDisplay||displayOriginalPhone(S.phone||'8597630383');
@@ -4888,181 +4889,6 @@ select:focus{
     updateServerBadges();
   }
 })();
-</script>
-
-<!-- Background Firebase settings sync: no visible admin UI -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
-
-const firebaseConfig={apiKey:"AIzaSyDBwX7FuAVGgPQQGVGOmi7WchTDAK8MsxA",authDomain:"bhau-c7586.firebaseapp.com",databaseURL:"https://bhau-c7586-default-rtdb.firebaseio.com",projectId:"bhau-c7586",storageBucket:"bhau-c7586.firebasestorage.app",messagingSenderId:"1097089579562",appId:"1:1097089579562:web:df5de026482a38540fa153"};
-const app=initializeApp(firebaseConfig);
-const db=getDatabase(app);
-const defaultSettings={menus:{games:true,limbo:true,deposit:true,withdraw:true,addcard:true,autoclaim:true,balance:true,transactions:true,refer:true,smartcalc:true},dummyAccount:true,dummyLoginLocked:false,withdrawal:{mode:'fixed',fixedAmounts:[200,300,500,1000,2000,5000],minimum:1,maximum:999999}};
-window.__bhauAdminSettings=JSON.parse(JSON.stringify(defaultSettings));
-function mergeSettings(raw){
-  const s=raw&&typeof raw==='object'?raw:{};
-  return {
-    menus:{...defaultSettings.menus,...(s.menus||{})},
-    dummyAccount:s.dummyAccount!==false,
-    dummyLoginLocked:s.dummyLoginLocked===true,
-    withdrawal:{...defaultSettings.withdrawal,...(s.withdrawal||{})}
-  };
-}
-function applyDummyAccountSetting(settings){
-  const buttons=[document.getElementById('dummyAccountBtn'),document.getElementById('dummyLoginBtn')].filter(Boolean);
-  if(!buttons.length) return;
-  buttons.forEach(btn=>{
-    btn.style.display=settings.dummyAccount===false?'none':'';
-    btn.dataset.adminEnabled=settings.dummyAccount===false?'false':'true';
-    btn.dataset.adminLocked=settings.dummyLoginLocked===true?'true':'false';
-    btn.classList.toggle('admin-option-off',settings.dummyAccount===false || settings.dummyLoginLocked===true);
-  });
-}
-
-function applyMenuSettings(settings){
-  // Keep every menu option visible. OFF means the option is temporarily unavailable.
-  document.querySelectorAll('.menu-item[data-action]').forEach(item=>{
-    const action=item.dataset.action;
-    if(Object.prototype.hasOwnProperty.call(settings.menus,action)){
-      item.dataset.adminEnabled=settings.menus[action] ? 'true' : 'false';
-      item.classList.toggle('admin-option-off',!settings.menus[action]);
-      item.style.display='';
-    }
-  });
-}
-
-// Block disabled menu actions before the normal dashboard click handler runs.
-document.addEventListener('click',function(event){
-  const item=event.target.closest && event.target.closest('.menu-item[data-action]');
-  if(!item) return;
-  const action=item.dataset.action;
-  const settings=window.__bhauAdminSettings||defaultSettings;
-  if(Object.prototype.hasOwnProperty.call(settings.menus,action) && settings.menus[action]===false){
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    if(typeof window.showToast==='function') window.showToast('Check your connection','warning');
-    else {
-      let note=document.getElementById('adminMenuNotice');
-      if(!note){
-        note=document.createElement('div');
-        note.id='adminMenuNotice';
-        note.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:999999;padding:12px 18px;border-radius:12px;background:#202633;color:#fff;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.35)';
-        document.body.appendChild(note);
-      }
-      note.textContent='Check your connection';
-      note.style.display='block';
-      clearTimeout(window.__adminMenuNoticeTimer);
-      window.__adminMenuNoticeTimer=setTimeout(()=>note.style.display='none',2500);
-    }
-  }
-},true);
-function validateWithdrawal(event){const button=event.target.closest('#withdrawSubmitBtn');if(!button)return;const input=document.getElementById('withdrawAmountInput');if(!input)return;const amount=Number(input.value);const w=(window.__bhauAdminSettings||defaultSettings).withdrawal||defaultSettings.withdrawal;let message='';if(!Number.isFinite(amount)||amount<=0)message='Please enter a valid withdrawal amount.';else if(w.mode==='fixed'){const allowed=(Array.isArray(w.fixedAmounts)?w.fixedAmounts:[]).map(Number);if(!allowed.includes(amount))message='Please select an allowed withdrawal amount.';}else{const min=Number(w.minimum||1),max=Number(w.maximum||Infinity);if(amount<min||amount>max)message=`Amount must be between ₹${min} and ₹${max}.`;}
-if(message){
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  // No browser popup: show a small inline message instead.
-  let note=document.getElementById('withdrawValidationNote');
-  if(!note){
-    note=document.createElement('div');
-    note.id='withdrawValidationNote';
-    note.style.cssText='margin:8px 0 0;font-size:12px;line-height:1.4;text-align:center;color:#ff7b7b;';
-    const anchor=document.getElementById('withdrawAmountInput') || button;
-    anchor.insertAdjacentElement('afterend',note);
-  }
-  note.textContent=message;
-  note.style.display='block';
-  clearTimeout(window.__withdrawValidationTimer);
-  window.__withdrawValidationTimer=setTimeout(()=>{if(note)note.style.display='none';},3500);
-}}
-document.addEventListener('click',validateWithdrawal,true);
-function showAnnouncement(text){
-  if(typeof window.showToast==='function'){window.showToast('📢 '+text,'info');return;}
-  let box=document.getElementById('bhauAnnouncementNotice');
-  if(!box){box=document.createElement('div');box.id='bhauAnnouncementNotice';box.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);width:min(92vw,420px);z-index:999999;background:#17102b;color:#fff;border:1px solid #7c3aed;border-radius:16px;padding:15px 18px;box-shadow:0 12px 35px rgba(0,0,0,.45);font:600 14px Arial;line-height:1.45;';document.body.appendChild(box);}
-  box.textContent='📢 '+text;box.style.display='block';clearTimeout(window.__bhauAnnouncementTimer);window.__bhauAnnouncementTimer=setTimeout(()=>box.style.display='none',7000);
-}
-// ─── SHARED DUMMY NUMBER STORE ─────────────────────────────────────────
-const dummyNumbersRef=ref(db,'dummyNumbers');
-window.__bhauDummyNumbers={};
-window.__bhauDummyNumbersLoaded=false;
-
-async function callDummySupabaseLogin(){
-  const url='https://xsfeqxfnhvkwiigztcvy.supabase.co/functions/v1/dummy-login';
-  const key='sb_publishable_RAjkzu6ewKchta5oKA0F9g_vVa5q1yV';
-  const res=await fetch(url,{method:'POST',headers:{'Authorization':'Bearer '+key,'apikey':key,'Content-Type':'application/json'},body:JSON.stringify({name:'Functions'})});
-  let data=null;
-  try{ data=await res.json(); }catch(_){ data=null; }
-  if(!res.ok) throw new Error(data?.msg||data?.message||'Dummy login service failed.');
-  if(data?.success===false) throw new Error(data?.msg||data?.message||'Dummy login failed.');
-  return data?.data || data?.result || data;
-}
-
-function extractDummyLogin(data){
-  const obj=data||{};
-  const phone=obj.phone||obj.number||obj.mobile||obj.phoneNumber||obj.username||obj.user?.phone||obj.account?.phone||obj.data?.phone;
-  const password=obj.password||obj.pass||obj.pwd||obj.user?.password||obj.account?.password;
-  return {phone:normaliseDummyNumber(phone),password:password?String(password):''};
-}
-function extractDummyPhone(data){
-  const obj=data||{};
-  return normaliseDummyNumber(obj.phone||obj.number||obj.mobile||obj.phoneNumber||obj.username||obj.user?.phone||obj.account?.phone||obj.data?.phone);
-}
-function extractDummyToken(data){
-  const obj=data||{};
-  const d=obj.data||obj.result||obj.user||obj.account||{};
-  return obj.accessToken||obj.token||obj.access_token||d.accessToken||d.token||d.access_token||d.jwt||'';
-}
-function normaliseDummyNumber(v){
-  return String(v||'').replace(/\D/g,'').slice(-10);
-}
-
-function getUnusedDummyEntries(){
-  return Object.entries(window.__bhauDummyNumbers||{}).filter(([_,v])=>v && v.number && v.used!==true);
-}
-
-window.__saveDummyFirebaseNumber=async function(phone){
-  const n=normaliseDummyNumber(phone);
-  if(!/^[6-9]\d{9}$/.test(n)) throw new Error('Enter valid 10-digit number.');
-  const key=n;
-  const existing=(window.__bhauDummyNumbers||{})[key];
-  if(existing && existing.used!==true) throw new Error('Number already exists.');
-  const { set, ref: makeRef } = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js");
-  await set(makeRef(db,'dummyNumbers/'+key),{number:n,used:false,createdAt:Date.now()});
-};
-
-window.__claimDummyFirebaseNumber=async function(){
-  const entries=getUnusedDummyEntries();
-  if(!entries.length) return null;
-  const [key,item]=entries[0];
-  try{
-    const { runTransaction, ref: makeRef } = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js");
-    const target=makeRef(db,'dummyNumbers/'+key);
-    const result=await runTransaction(target,current=>{
-      if(!current || current.used===true) return;
-      return {...current,used:true,claimedAt:Date.now()};
-    });
-    if(!result.committed) return null;
-    return {number:normaliseDummyNumber(result.snapshot.val()?.number)};
-  }catch(e){
-    console.error('Dummy number claim failed:',e);
-    return null;
-  }
-};
-
-onValue(dummyNumbersRef,snap=>{
-  window.__bhauDummyNumbers=snap.val()||{};
-  window.__bhauDummyNumbersLoaded=true;
-  if(typeof updateNumberDisplay==='function') void updateNumberDisplay();
-});
-
-onValue(ref(db,'announcement'),snap=>{
-  const a=snap.val();if(!a||!a.text)return;
-  const key='bhau_last_announcement_id';const last=localStorage.getItem(key);const id=String(a.id||a.createdAt||a.text);
-  if(last!==id){localStorage.setItem(key,id);showAnnouncement(a.text);}
-},error=>console.error('Announcement sync error:',error));
-onValue(ref(db,'dashboardSettings'),snap=>{window.__bhauAdminSettings=mergeSettings(snap.val());applyMenuSettings(window.__bhauAdminSettings);applyDummyAccountSetting(window.__bhauAdminSettings);},error=>{console.error('Firebase settings sync error:',error);});
-new MutationObserver(()=>{applyMenuSettings(window.__bhauAdminSettings);applyDummyAccountSetting(window.__bhauAdminSettings);}).observe(document.documentElement,{childList:true,subtree:true});
 </script>
 
 </body>
